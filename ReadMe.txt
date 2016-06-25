@@ -1,9 +1,9 @@
 first line - unchanged
 
-1234
+abcd
 
 third line - unchanged
 
-5678
+efgh
 
 second line - unchanged
