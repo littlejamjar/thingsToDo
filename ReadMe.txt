@@ -1,12 +1,9 @@
-<<<<<<< HEAD
-My first GitHub repository
+first line - unchanged
 
-Here I’ve written new line while on the master branch!!!
-||||||| merged common ancestors
-My first GitHub repository
-=======
-My first GitHub repository.
+1234
 
+third line - unchanged
 
-Here I’ve added a line while under the newBranch branch.
->>>>>>> newBranch
+5678
+
+second line - unchanged
