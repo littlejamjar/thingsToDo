@@ -1,6 +1,6 @@
 first line - unchanged
 
-abcd
+ab1d
 
 third line - unchanged
 
