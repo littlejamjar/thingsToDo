@@ -8,25 +8,11 @@
 
 import UIKit
 
-class FoldersTVC: UITableViewController, UITabBarControllerDelegate {
+class FoldersTVC: UITableViewController {
 
     
-    var tabBarDelegate: UITabBarControllerDelegate?
     
     
-    let transitionManager = TransitionManager()
-    
-//    //func tabBarController(_ tabBarController: UITabBarController,
-//                                     animationControllerForTransitionFrom fromVC: UIViewController,
-//                                                                          to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning?
-    
-    func tabBarController(tabBarController: UITabBarController,
-                          animationControllerForTransitionFromViewController fromVC: UIViewController,
-                          toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        print("inside the tab bar controller delegate")
-        
-        return transitionManager
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,44 +37,7 @@ class FoldersTVC: UITableViewController, UITabBarControllerDelegate {
         self.navigationItem.rightBarButtonItems = rightBarButtonItemArray
         self.navigationItem.leftBarButtonItem = menuButtonItem
 
-        tabBarDelegate = self
-        
-        guard let tbc = self.tabBarController else {
-            print("tbc not set.")
-            return
-        }
-        
-       // tabBarDelegate?.tabBarController(<#T##tabBarController: UITabBarController##UITabBarController#>, animationControllerForTransitionFromViewController: <#T##UIViewController#>, toViewController: <#T##UIViewController#>)
-        
-        // -- Setup tab bar appearance
-        //FIXME: Appears to be a bug whereby setting
-        //                              "self.tabBarItem.title = "desired title"
-        //       gets overriden by some other code later on. Will set this in storyboard from now.
-                
-        //self.tabBarController?.tabBar.barTintColor = UIColor.redColor()
-        
-//        self.navigationItem.title = @"my title"; sets navigation bar title.
-//        
-//        self.tabBarItem.title = @"my title"; sets tab bar title.
-//        
-//        self.title = @"my title"; sets both of these.
-        
-        
-//        self.tabBarItem.title = "Test tab bar name"
-//        self.tabBarController?.tabBarItem.title = "what about this one?"
-//        
-//        let tabBarController = self.tabBarController
-//        tabBarController?.tabBarItem.title = "tester"
-//        
-        
-        
-        
-//        UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-//        UITabBar *tabBar = tabBarController.tabBar;
-//        UITabBarItem *tabBarItem1 = [tabBar.items objectAtIndex:0];
-//        UITabBarItem *tabBarItem2 = [tabBar.items objectAtIndex:1];
-//        UITabBarItem *tabBarItem3 = [tabBar.items objectAtIndex:2];
-//        UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:3];
+
         
         
     }

@@ -75,10 +75,10 @@
             </objects>
             <point key="canvasLocation" x="1472" y="38"/>
         </scene>
-        <!--TabVC-->
+        <!--Tab Bar View Controller-->
         <scene sceneID="LJQ-c3-Svz">
             <objects>
-                <tabBarController modalTransitionStyle="crossDissolve" id="y3p-0Y-Eqf" customClass="TabVC" customModule="ThingsToDo" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController modalTransitionStyle="crossDissolve" id="y3p-0Y-Eqf" customClass="TabBarViewController" customModule="ThingsToDo" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="UnM-zq-UoE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

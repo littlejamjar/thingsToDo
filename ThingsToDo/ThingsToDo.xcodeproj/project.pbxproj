@@ -16,6 +16,8 @@
 		21A2C2301D38747600BA708F /* ThingsToDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A2C22F1D38747600BA708F /* ThingsToDoTests.swift */; };
 		21A2C23B1D38747600BA708F /* ThingsToDoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A2C23A1D38747600BA708F /* ThingsToDoUITests.swift */; };
 		21C196BE1D387D3B0057AEAF /* FoldersTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C196BD1D387D3B0057AEAF /* FoldersTVC.swift */; };
+		21C196C71D389C3F0057AEAF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C196C61D389C3F0057AEAF /* TabBarViewController.swift */; };
+		21C196C91D389CA20057AEAF /* TransitioningObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C196C81D389CA20057AEAF /* TransitioningObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		21A2C23A1D38747600BA708F /* ThingsToDoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingsToDoUITests.swift; sourceTree = "<group>"; };
 		21A2C23C1D38747600BA708F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21C196BD1D387D3B0057AEAF /* FoldersTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldersTVC.swift; sourceTree = "<group>"; };
+		21C196C61D389C3F0057AEAF /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarViewController.swift; path = ../TabBarViewController.swift; sourceTree = "<group>"; };
+		21C196C81D389CA20057AEAF /* TransitioningObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitioningObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +153,8 @@
 		21C196C11D388BD60057AEAF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				21C196C61D389C3F0057AEAF /* TabBarViewController.swift */,
+				21C196C81D389CA20057AEAF /* TransitioningObject.swift */,
 				21A2C2191D38747500BA708F /* LoginVC.swift */,
 				21C196BD1D387D3B0057AEAF /* FoldersTVC.swift */,
 			);
@@ -287,6 +293,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21C196C71D389C3F0057AEAF /* TabBarViewController.swift in Sources */,
+				21C196C91D389CA20057AEAF /* TransitioningObject.swift in Sources */,
 				21A2C21A1D38747500BA708F /* LoginVC.swift in Sources */,
 				21A2C2181D38747500BA708F /* AppDelegate.swift in Sources */,
 				21A2C2201D38747600BA708F /* ThingsToDo.xcdatamodeld in Sources */,
