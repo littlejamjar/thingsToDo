@@ -6,9 +6,12 @@
 //  Copyright © 2016 james wikaira. All rights reserved.
 //
 
-import UIKit
 
-class ViewController: UIViewController {
+import UIKit
+import Foundation
+
+
+class LoginVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +22,18 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
+    @IBAction func signInBtn(sender: UIButton) {
+        self.performSegueWithIdentifier("showTabBarVC", sender: nil)
 
+        
+    }
+    
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // code prior to segueing if any is required
+    }
+    
 }
 
