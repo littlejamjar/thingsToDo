@@ -16,12 +16,6 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         
         let tranObj = TransitioningObject()
         
-        
-        //FIXME: Will this affect other transitions???
-        
-        print("fromVC.tabBarItem.tag = \(fromVC.tabBarItem.tag)")
-        print("toVC.tabBarItem.tag = \(toVC.tabBarItem.tag)")
-        
         tranObj.fromViewTag = fromVC.tabBarItem.tag
         tranObj.toViewTag = toVC.tabBarItem.tag
         

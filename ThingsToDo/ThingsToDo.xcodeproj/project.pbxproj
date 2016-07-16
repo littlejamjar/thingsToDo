@@ -136,6 +136,8 @@
 		21C196BF1D388BC70057AEAF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				21C196C61D389C3F0057AEAF /* TabBarViewController.swift */,
+				21C196C81D389CA20057AEAF /* TransitioningObject.swift */,
 				21A2C21B1D38747600BA708F /* Main.storyboard */,
 				21A2C2211D38747600BA708F /* Assets.xcassets */,
 				21A2C2231D38747600BA708F /* LaunchScreen.storyboard */,
@@ -153,8 +155,6 @@
 		21C196C11D388BD60057AEAF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				21C196C61D389C3F0057AEAF /* TabBarViewController.swift */,
-				21C196C81D389CA20057AEAF /* TransitioningObject.swift */,
 				21A2C2191D38747500BA708F /* LoginVC.swift */,
 				21C196BD1D387D3B0057AEAF /* FoldersTVC.swift */,
 			);

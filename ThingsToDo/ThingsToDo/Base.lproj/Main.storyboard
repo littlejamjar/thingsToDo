@@ -93,11 +93,11 @@
             </objects>
             <point key="canvasLocation" x="-441" y="373"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Folders-->
         <scene sceneID="Pfl-xb-Wzo">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wJe-Wv-nEb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="1" title="" id="Zmn-Lt-Azn"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Folders" id="Zmn-Lt-Azn"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="PPB-ok-d13">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -112,11 +112,11 @@
             </objects>
             <point key="canvasLocation" x="660" y="38"/>
         </scene>
-        <!--Item 2-->
+        <!--Hot Tasks-->
         <scene sceneID="SyF-gQ-kdW">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ugY-f9-Jrs" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="2" title="Item 2" id="xl6-ja-EWY"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Hot Tasks" id="xl6-ja-EWY"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nFP-6Z-OsN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
