@@ -13,13 +13,31 @@ import UIKit
 
 class TransitioningObject: NSObject, UIViewControllerAnimatedTransitioning {
     
+    // --   Custom properties to determine which direction screens scrolling from.
+    var fromViewTag: Int?
+    var toViewTag: Int?
+    
+    
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         
         // Get references for both views
         let fromView: UIView = transitionContext.viewForKey(UITransitionContextFromViewKey)!
         let toView: UIView = transitionContext.viewForKey(UITransitionContextToViewKey)!
         
-        //let tabBarController = TabBarViewController()
+        // Starting x-axis co-ordinate for 'toView'
+        let xPosition: CGFloat
+        
+        if fromViewTag < toViewTag {    // fromView tab is to LEFT of toView
+            
+            print("fromViewTag = \(fromViewTag)")
+            print("fromViewTag = \(toViewTag)")
+
+            xPosition = 320 //FIXME: Why is this 320?
+        } else {
+            print("fromViewTag = \(fromViewTag)")
+            print("fromViewTag = \(toViewTag)")
+            xPosition = -320
+        }
         
         guard let superView = fromView.superview else {
             print("Error: Could not find super view..")
@@ -32,13 +50,9 @@ class TransitioningObject: NSObject, UIViewControllerAnimatedTransitioning {
         // Get the frame size of the fromView
         let viewSize: CGRect = fromView.frame
         
-        //    BOOL scrollRight = controllerIndex > tabBarController.selectedIndex;
-
-        // Determine whether we are scrolling right or left.
-        let scrollRight = true
-
+        
         // Position the 'toView' off the screen to the right.
-        toView.frame = CGRectMake((scrollRight ? 320 : -320), viewSize.origin.y, 320, viewSize.size.height)
+        toView.frame = CGRectMake(xPosition, viewSize.origin.y, 320, viewSize.size.height)
         
         // This function deals with the actual transition.
         UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0.1, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
@@ -52,7 +66,9 @@ class TransitioningObject: NSObject, UIViewControllerAnimatedTransitioning {
                         //UIView.transitionFromView(fromView, toView: toView, duration: self.transitionDuration(transitionContext), options:                                                                          UIViewAnimationOptions.TransitionCrossDissolve) { finished in transitionContext.completeTransition(true)}
             
             
-                fromView.frame = CGRectMake((scrollRight ? -320 : 320), viewSize.origin.y, 320, viewSize.size.height);
+            
+                //  Note that x-axis coordinates are inverted in the below example
+                fromView.frame = CGRectMake(xPosition * -1, viewSize.origin.y, 320, viewSize.size.height);
                 toView.frame = CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
             
             }) { (finished) in
