@@ -16,6 +16,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         
         let tranObj = TransitioningObject()
         
+        // Set the tags for each view controller so transition object can determine which sway to scroll
         tranObj.fromViewTag = fromVC.tabBarItem.tag
         tranObj.toViewTag = toVC.tabBarItem.tag
         

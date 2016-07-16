@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
+    <entity name="Folder" representedClassName=".Folder" syncable="YES">
+        <attribute name="creationDate" attributeType="Date" syncable="YES"/>
+        <attribute name="isComplete" attributeType="Boolean" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="subFolders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SubFolder" inverseName="folder" inverseEntity="SubFolder" syncable="YES"/>
+    </entity>
+    <entity name="SubFolder" representedClassName=".SubFolder" syncable="YES">
+        <attribute name="creationDate" attributeType="Date" syncable="YES"/>
+        <attribute name="dueDateTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="isComplete" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isHot" attributeType="Boolean" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="subFolders" inverseEntity="Folder" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Folder" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="SubFolder" positionX="297" positionY="-18" width="128" height="133"/>
+    </elements>
 </model>

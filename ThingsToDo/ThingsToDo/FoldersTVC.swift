@@ -8,12 +8,9 @@
 
 import UIKit
 
+
 class FoldersTVC: UITableViewController {
 
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,7 +34,7 @@ class FoldersTVC: UITableViewController {
         self.navigationItem.rightBarButtonItems = rightBarButtonItemArray
         self.navigationItem.leftBarButtonItem = menuButtonItem
 
-
+        
         
         
     }
@@ -49,6 +46,10 @@ class FoldersTVC: UITableViewController {
     
     func addFolder() {
         //TODO: add code to add a new folder
+        
+        
+        //add popup view thing
+        
     }
     
     func searchTasks() {
@@ -57,31 +58,35 @@ class FoldersTVC: UITableViewController {
     
 }
 
-
-extension FoldersTVC {  //MARK: TableView Functions
+//MARK: TableView Functions
+extension FoldersTVC {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 6
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //TODO: Implement code for when users select a row
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+         
+         // Configure the cell...
+        cell.textLabel?.text = "record"
+        
+        return cell
+     }
 }
 
 
-/*
- override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
- let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
- 
- // Configure the cell...
- 
- return cell
- }
- */
+
 
 /*
  // Override to support conditional editing of the table view.

@@ -29,15 +29,10 @@ class TransitioningObject: NSObject, UIViewControllerAnimatedTransitioning {
         let viewSize: CGRect = fromView.frame
 
         if fromViewTag < toViewTag {    // fromView tab is to LEFT of toView
-            //xPosition = 320 //FIXME: Why is this 320?
             xPosition = viewSize.size.width
-            
-            print("1 xPosition = \(xPosition)")
             
         } else {
             xPosition = viewSize.size.width * -1
-            print("2 xPosition = \(xPosition)")
-
         }
         
         guard let superView = fromView.superview else {
