@@ -9,6 +9,9 @@
 import UIKit
 import CoreData
 
+//FIXME: Fix issue where user deletes a SEARCHED record but the row doesn't disappear..
+//TODO: Extend search so it searched sub-folders and tasks also..
+
 
 class FoldersTVC: UITableViewController {
 
@@ -17,12 +20,15 @@ class FoldersTVC: UITableViewController {
     var moc: NSManagedObjectContext!
     var folders = [NSManagedObject]()
     
+    let searchController = UISearchController(searchResultsController: nil) //FIXME: argument of nil means use current view i think???
+    
+    var filteredFolders = [Folder]()
+    
+    
     func showMenu() {
         //TODO: add code to show the meny pop-up. Ideally it comes down from the button in a pretty way but will accept just a normal pop-up if time pressed.
     }
     
-    
-
     func addFolder() {
         
         // Creat Alert Controller
@@ -98,21 +104,41 @@ class FoldersTVC: UITableViewController {
     
     }
     
-    
-    func deleteFolder(){
-        
-    }
-    
-    
+//    func deleteFolder(){
+//        
+//    }
     
     func search() {
         //TODO: add code so user can search through ALL tasks OR just through the current tasks..OR give the option in the search VC (Search VC should be seperate window...)
     }
     
-    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        print("before filteredFolders = \(filteredFolders.count)")
+
+        
+        filteredFolders = (folders as! [Folder]).filter { folder in
+            let title = folder.valueForKey("title")
+            let contains =  title?.lowercaseString.containsString(searchText.lowercaseString)
+            print("title = \(title), contains = \(contains)")
+            
+            return contains!
+        }
+        
+        print("after filteredFolders = \(filteredFolders.count)")
+        
+        tableView.reloadData()
+    }
     
     
 }
+
+//MARK: Search Bar Extension
+extension FoldersTVC: UISearchResultsUpdating {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
+
 
 //MARK: View Functions
 extension FoldersTVC {
@@ -139,6 +165,11 @@ extension FoldersTVC {
         
         self.navigationItem.rightBarButtonItems = rightBarButtonItemArray
         self.navigationItem.leftBarButtonItem = menuButtonItem
+        
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
         
     }
     
@@ -220,8 +251,13 @@ extension FoldersTVC {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return folders.count
+
+        // Check whether user has started search in search bar
+        if searchController.active && searchController.searchBar.text != "" {
+            return filteredFolders.count
+        } else {
+            return folders.count
+        }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -231,20 +267,42 @@ extension FoldersTVC {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         
-        let folder = folders[indexPath.row] as! Folder
+        var folder: Folder
         
-        cell.textLabel?.text = folder.title
+        if searchController.active && searchController.searchBar.text != "" {
+            folder = filteredFolders[indexPath.row]
+        } else {
+            folder = folders[indexPath.row] as! Folder
+        }
         
+        //cell.textLabel?.text = folder.title
         cell.textLabel?.text = folder.valueForKey("title") as? String
-        
+
         return cell
+        
+        
+        
+        //let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+//        let candy: Candy
+//        if searchController.active && searchController.searchBar.text != "" {
+//            candy = filteredCandies[indexPath.row]
+//        } else {
+//            candy = candies[indexPath.row]
+////        }
+//        cell.textLabel?.text = candy.name
+//        cell.detailTextLabel?.text = candy.category
+//        return cell
+        
+        
+        
+        
      }
     
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         
         let completeTitleString = "✓ "
-        let deleteTitleString = "X "
+        let deleteTitleString = "x "
         
         
         
