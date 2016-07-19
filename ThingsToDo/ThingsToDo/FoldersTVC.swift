@@ -7,13 +7,119 @@
 //
 
 import UIKit
+import CoreData
 
 
 class FoldersTVC: UITableViewController {
 
+    // Property declarations
+    var actionToEnable: UIAlertAction?
+    var moc: NSManagedObjectContext!
+    var folders = [NSManagedObject]()
+    
+    func showMenu() {
+        //TODO: add code to show the meny pop-up. Ideally it comes down from the button in a pretty way but will accept just a normal pop-up if time pressed.
+    }
+    
+    
+
+    func addFolder() {
+        
+        // Creat Alert Controller
+        let alertController = UIAlertController(title: "Add Folder", message: "Enter Folder title", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // Add TextField to the Alert Controller
+        alertController.addTextFieldWithConfigurationHandler { (textField) in
+            textField.addTarget(self, action: #selector(self.textFieldChanged(_:)), forControlEvents: .EditingChanged)
+        }
+        
+        // Create the Cancel button
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) in
+            //TODO: User cancelled 
+            print("User cancelled the new folder")
+        }
+        
+        // Create the Add button
+        let addAction = UIAlertAction(title: "Add", style: UIAlertActionStyle.Default) { (alert) in
+            //TODO: User cancelled
+            print("Should have made the new folder")
+            
+            guard let title = alertController.textFields![0].text else {
+                print("No title")
+                return
+            }
+            
+            self.createFolder(title)
+        }
+        
+        // Add buttons to the Alert Controller
+        alertController.addAction(cancelAction)
+        alertController.addAction(addAction)
+        
+        // Set actionToEnable to the addAction Alert Action.
+        self.actionToEnable = addAction
+        
+        // Set the Action Button to false initially because nothing will be within the Text Field
+        addAction.enabled = false
+
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alertController, animated: true, completion: nil)
+
+        }
+        
+    }
+    
+    func createFolder(title: String){
+        //let newFolder = CoreDataHelper.insertManagedObject("Folder", managedObjectContext: moc) as! Folder
+    
+        print("createFolder = \(title)")
+        
+        guard let entity = NSEntityDescription.entityForName("Folder", inManagedObjectContext: moc) else {
+            print("Error: Could not create entity")
+            return
+        }
+        
+        let newFolder = NSManagedObject(entity: entity, insertIntoManagedObjectContext: moc)
+        
+        newFolder.setValue(title, forKey: "title")
+        newFolder.setValue(NSDate(), forKey: "creationDate")
+        newFolder.setValue(false, forKey: "isComplete")
+        
+        do{
+            try moc.save()
+            folders.append(newFolder)
+        } catch {
+            print("Error: Could not save new folder from Managed Object Context")
+        }
+
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+        }        //loadData()
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    func searchTasks() {
+        //TODO: add code so user can search through ALL tasks OR just through the current tasks..OR give the option in the search VC (Search VC should be seperate window...)
+    }
+    
+    
+    
+    
+}
+
+//MARK: View Functions
+extension FoldersTVC {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         
         //TODO: Reference code. Delete once done.
         // Uncomment the following line to preserve selection between presentations
@@ -33,116 +139,82 @@ class FoldersTVC: UITableViewController {
         
         self.navigationItem.rightBarButtonItems = rightBarButtonItemArray
         self.navigationItem.leftBarButtonItem = menuButtonItem
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        
+        let fetchRequest = NSFetchRequest(entityName: "Folder")
 
         
+        //3
+        do {
+            let results = try moc.executeFetchRequest(fetchRequest)
+            folders = results as! [NSManagedObject]
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
         
         
-    }
+        
+        
+//        NSNotificationCenter.defaultCenter().removeObserver(self,
+//                                                            name: NSPersistentStoreCoordinatorStoresDidChangeNotification,
+//                                                            object: nil)
+//        
+//        NSNotificationCenter.defaultCenter().removeObserver(self,
+//                                                            name: NSPersistentStoreCoordinatorStoresWillChangeNotification,
+//                                                            object: managedObjectContext.persistentStoreCoordinator)
+//        
+//        NSNotificationCenter.defaultCenter().removeObserver(self,
+//                                                            name: NSPersistentStoreDidImportUbiquitousContentChangesNotification,
+//                                                            object: managedObjectContext.persistentStoreCoordinator)
+//        
+//        
+//        //Notifications coming from iCloud
+//        NSNotificationCenter.defaultCenter().addObserver(self,
+//                                                         selector: #selector(FoldersTVC.persistentStoreDidChange),
+//                                                         name: NSPersistentStoreCoordinatorStoresDidChangeNotification,
+//                                                         object: nil)
+//        
+//        NSNotificationCenter.defaultCenter().addObserver(self,
+//                                                         selector: #selector(FoldersTVC.persistentStoreWillChange as (FoldersTVC) -> () -> ()),
+//                                                         name: NSPersistentStoreCoordinatorStoresWillChangeNotification,
+//                                                         object: moc.persistentStoreCoordinator)
+//        
+//        NSNotificationCenter.defaultCenter().addObserver(self,
+//                                                         selector: #selector(NotebookTableVC.recieveICloudChanges(_:)),
+//                                                         name: NSPersistentStoreDidImportUbiquitousContentChangesNotification,
+//                                                         object: managedObjectContext.persistentStoreCoordinator)
 
-//    func showAlert()
-//    {
-//        let titleStr = "title"
-//        let messageStr = "message"
-//        
-//        let alert = UIAlertController(title: titleStr, message: messageStr, preferredStyle: UIAlertControllerStyle.Alert)
-//        
-//        let placeholderStr =  "placeholder"
-//        
-//        alert.addTextFieldWithConfigurationHandler({(textField: UITextField) in
-//            textField.placeholder = placeholderStr
-//            textField.addTarget(self, action: #selector(self.textChanged(_:)), forControlEvents: .EditingChanged)
-//        })
-//        
-//        let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (_) -> Void in
-//            
-//        })
-//        
-//        let action = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (_) -> Void in
-//            let textfield = alert.textFields!.first!
-//            
-//            //Do what you want with the textfield!
-//        })
-//        
-//        alert.addAction(cancel)
-//        alert.addAction(action)
-//        
-//        self.actionToEnable = action
-//        action.enabled = false
-//        self.presentViewController(alert, animated: true, completion: nil)
-//    }
-//    
-//    func textChanged(sender:UITextField) {
-//        self.actionToEnable?.enabled = (sender.text! == "Validation")
-//    }
-    
-    
-
-    func showMenu() {
-        //TODO: add code to show the meny pop-up. Ideally it comes down from the button in a pretty way but will accept just a normal pop-up if time pressed.
     }
-    
-    var actionToEnable: UIAlertAction?
-    
-    
-    
-    func textChanged(sender: UITextField){
-        
-        //http://stackoverflow.com/questions/24474762/check-on-uialertcontroller-textfield-for-enabling-the-button
-        
-        //self.actionToEnable?.enabled = (sender.text! != "Validation")
-        print("This shit worked!! = \(sender.text) and enabled = \(sender.enabled)")
-        
-        if sender.text != "" {
-            self.actionToEnable?.enabled = true
-        } else {
-            self.actionToEnable?.enabled = false
-        }
-    }
-    
-    func addFolder() {
-        
-        let alertController = UIAlertController(title: "Add Folder", message: "Enter Folder title", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addTextFieldWithConfigurationHandler { (textField) in
-            textField.addTarget(self, action: #selector(self.textChanged(_:)), forControlEvents: .EditingChanged)
-        }
-        
-        
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) in
-            //TODO: User cancelled 
-            print("User cancelled the new folder")
-        }
-        
-        let addAction = UIAlertAction(title: "Add", style: UIAlertActionStyle.Default) { (alert) in
-            //TODO: User cancelled
-            print("User cancelled the new folder")
-        }
-        
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(addAction)
-        
-        // Set actionToEnable to the addAction Alert Action
-        self.actionToEnable = addAction
-        addAction.enabled = false
-
-        
-        dispatch_async(dispatch_get_main_queue()) {
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }
-        
-    }
-    
-    
-    
-    func searchTasks() {
-        //TODO: add code so user can search through ALL tasks OR just through the current tasks..OR give the option in the search VC (Search VC should be seperate window...)
-    }
-    
-    
-    
     
 }
+
+//MARK: loadData function
+extension FoldersTVC{
+    
+//    func loadData(){
+//        folderArray = [Folder]()
+//        
+//        folderArray = CoreDataHelper.fetchEntities("Folder", managedObjectContext: self.moc, predicate: nil) as! [Folder]
+//        
+//        print("inside here")
+//        
+//        print("folderArray = \(folderArray.count)")
+//        
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.tableView.reloadData()
+//        }
+//        
+//        
+//    }
+    
+}
+
 
 //MARK: TableView Functions
 extension FoldersTVC {
@@ -154,7 +226,7 @@ extension FoldersTVC {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 6
+        return folders.count
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -163,9 +235,22 @@ extension FoldersTVC {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-         
+        
+        let folder = folders[indexPath.row] as! Folder
+        
+        cell.textLabel?.text = folder.title
+        // or
+        
+        cell.textLabel?.text = folder.valueForKey("title") as! String
+        
+        
+        
+        
          // Configure the cell...
-        cell.textLabel?.text = "record"
+        
+        //var text = folderArray[indexPath.row]
+        
+        //cell.textLabel?.text = text
         
         return cell
      }

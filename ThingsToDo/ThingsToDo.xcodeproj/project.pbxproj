@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21179E2C1D3CC147008023EB /* ConvenienceUIFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21179E2B1D3CC147008023EB /* ConvenienceUIFunctions.swift */; };
 		2161D6B41D39CB7400D1CF6A /* SubFolder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161D6B01D39CB7300D1CF6A /* SubFolder+CoreDataProperties.swift */; };
 		2161D6B51D39CB7400D1CF6A /* SubFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161D6B11D39CB7300D1CF6A /* SubFolder.swift */; };
 		2161D6B61D39CB7400D1CF6A /* Folder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161D6B21D39CB7300D1CF6A /* Folder+CoreDataProperties.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		21179E2B1D3CC147008023EB /* ConvenienceUIFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvenienceUIFunctions.swift; sourceTree = "<group>"; };
 		2161D6B01D39CB7300D1CF6A /* SubFolder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SubFolder+CoreDataProperties.swift"; path = "../SubFolder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2161D6B11D39CB7300D1CF6A /* SubFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubFolder.swift; path = ../SubFolder.swift; sourceTree = "<group>"; };
 		2161D6B21D39CB7300D1CF6A /* Folder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Folder+CoreDataProperties.swift"; path = "../Folder+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 		21C196BF1D388BC70057AEAF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				21179E2B1D3CC147008023EB /* ConvenienceUIFunctions.swift */,
 				21C196C61D389C3F0057AEAF /* TabBarViewController.swift */,
 				21C196C81D389CA20057AEAF /* TransitioningObject.swift */,
 				21A2C21B1D38747600BA708F /* Main.storyboard */,
@@ -311,6 +314,7 @@
 				2161D6B51D39CB7400D1CF6A /* SubFolder.swift in Sources */,
 				2161D6B71D39CB7400D1CF6A /* Folder.swift in Sources */,
 				21C196C71D389C3F0057AEAF /* TabBarViewController.swift in Sources */,
+				21179E2C1D3CC147008023EB /* ConvenienceUIFunctions.swift in Sources */,
 				21C196C91D389CA20057AEAF /* TransitioningObject.swift in Sources */,
 				21A2C21A1D38747500BA708F /* LoginVC.swift in Sources */,
 				2161D6B61D39CB7400D1CF6A /* Folder+CoreDataProperties.swift in Sources */,
