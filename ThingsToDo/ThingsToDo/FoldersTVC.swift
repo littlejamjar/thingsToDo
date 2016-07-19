@@ -70,9 +70,7 @@ class FoldersTVC: UITableViewController {
         
     }
     
-    func createFolder(title: String){
-        //let newFolder = CoreDataHelper.insertManagedObject("Folder", managedObjectContext: moc) as! Folder
-    
+    func createFolder(title: String){    
         print("createFolder = \(title)")
         
         guard let entity = NSEntityDescription.entityForName("Folder", inManagedObjectContext: moc) else {
@@ -101,11 +99,13 @@ class FoldersTVC: UITableViewController {
     }
     
     
+    func deleteFolder(){
+        
+    }
     
     
     
-    
-    func searchTasks() {
+    func search() {
         //TODO: add code so user can search through ALL tasks OR just through the current tasks..OR give the option in the search VC (Search VC should be seperate window...)
     }
     
@@ -131,7 +131,7 @@ extension FoldersTVC {
         
         
         let addFolderButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(FoldersTVC.addFolder))
-        let searchButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: #selector(FoldersTVC.searchTasks))
+        let searchButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: #selector(FoldersTVC.search))
         let menuButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: #selector(FoldersTVC.showMenu)) //TODO: Get a better menu picture
         
         let rightBarButtonItemArray = [ addFolderButtonItem,
@@ -142,9 +142,36 @@ extension FoldersTVC {
         
     }
     
+    
+    
+    func deleteFolder(indexPath: NSIndexPath){
+        
+        let folderToDelete = self.folders[indexPath.row]
+        
+        self.moc.deleteObject(folderToDelete)
+        print("object should have deleted")
+        
+        do {
+            try self.moc.save()
+            let index = folders.indexOf(folderToDelete)
+            folders.removeAtIndex(index!)
+            
+        } catch {
+            print("Error: Failed to save context after deletng Folder")
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+            
+            print("shit should have reloaded itself....")
+        }
+        
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Set the Managed Object Context
         moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
         let fetchRequest = NSFetchRequest(entityName: "Folder")
@@ -158,38 +185,6 @@ extension FoldersTVC {
             print("Could not fetch \(error), \(error.userInfo)")
         }
         
-        
-        
-        
-//        NSNotificationCenter.defaultCenter().removeObserver(self,
-//                                                            name: NSPersistentStoreCoordinatorStoresDidChangeNotification,
-//                                                            object: nil)
-//        
-//        NSNotificationCenter.defaultCenter().removeObserver(self,
-//                                                            name: NSPersistentStoreCoordinatorStoresWillChangeNotification,
-//                                                            object: managedObjectContext.persistentStoreCoordinator)
-//        
-//        NSNotificationCenter.defaultCenter().removeObserver(self,
-//                                                            name: NSPersistentStoreDidImportUbiquitousContentChangesNotification,
-//                                                            object: managedObjectContext.persistentStoreCoordinator)
-//        
-//        
-//        //Notifications coming from iCloud
-//        NSNotificationCenter.defaultCenter().addObserver(self,
-//                                                         selector: #selector(FoldersTVC.persistentStoreDidChange),
-//                                                         name: NSPersistentStoreCoordinatorStoresDidChangeNotification,
-//                                                         object: nil)
-//        
-//        NSNotificationCenter.defaultCenter().addObserver(self,
-//                                                         selector: #selector(FoldersTVC.persistentStoreWillChange as (FoldersTVC) -> () -> ()),
-//                                                         name: NSPersistentStoreCoordinatorStoresWillChangeNotification,
-//                                                         object: moc.persistentStoreCoordinator)
-//        
-//        NSNotificationCenter.defaultCenter().addObserver(self,
-//                                                         selector: #selector(NotebookTableVC.recieveICloudChanges(_:)),
-//                                                         name: NSPersistentStoreDidImportUbiquitousContentChangesNotification,
-//                                                         object: managedObjectContext.persistentStoreCoordinator)
-
     }
     
 }
@@ -239,18 +234,8 @@ extension FoldersTVC {
         let folder = folders[indexPath.row] as! Folder
         
         cell.textLabel?.text = folder.title
-        // or
         
-        cell.textLabel?.text = folder.valueForKey("title") as! String
-        
-        
-        
-        
-         // Configure the cell...
-        
-        //var text = folderArray[indexPath.row]
-        
-        //cell.textLabel?.text = text
+        cell.textLabel?.text = folder.valueForKey("title") as? String
         
         return cell
      }
@@ -281,16 +266,20 @@ extension FoldersTVC {
             
             
             let addNotebookAlert = UIAlertController(title: "Are you sure you want this folder?",
-                                                     message: "Enter folder title",
+                                                     message: "All Sub-folder and Tasks will also be deleted",
                                                      preferredStyle:UIAlertControllerStyle.Alert)
             
-            //addNotebookAlert.addAction(UIAlertAction(title: "Add", style: UIAl, handler: nil))
+
             let deleteButton = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (deleteButton) in
-                    //TODO: Implement code to delete a record
+                //TODO: Implement code to delete a record
                 
-                    print("Record deleted..")
-                }
-            )
+                
+                self.deleteFolder(indexPath)
+
+                
+                
+            })
+            
             
             
             let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
@@ -307,6 +296,7 @@ extension FoldersTVC {
         
         return [complete, delete]
     }
+
     
     
     override func tableView(tableView: UITableView,
@@ -320,56 +310,6 @@ extension FoldersTVC {
                             forRowAtIndexPath indexPath: NSIndexPath) {
         // you need to implement this method too or you can't swipe to display the actions
         
-        
-        
     }
-    
 }
 
-
-
-
-/*
- // Override to support conditional editing of the table view.
- override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
- // Return false if you do not want the specified item to be editable.
- return true
- }
- */
-
-/*
- // Override to support editing the table view.
- override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
- if editingStyle == .Delete {
- // Delete the row from the data source
- tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
- } else if editingStyle == .Insert {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
- 
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
- // Return false if you do not want the item to be re-orderable.
- return true
- }
- */
-
-/*
- // MARK: - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
- // Get the new view controller using segue.destinationViewController.
- // Pass the selected object to the new view controller.
- }
- */
