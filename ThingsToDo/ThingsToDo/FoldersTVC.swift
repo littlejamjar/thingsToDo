@@ -243,21 +243,22 @@ extension FoldersTVC {
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         
-        let complete = UITableViewRowAction(style: .Normal, title: "Complete") { action, index in
+        let completeTitleString = "✓ "
+        let deleteTitleString = "X "
+        
+        
+        
+        
+        let complete = UITableViewRowAction(style: .Normal, title: completeTitleString) { action, index in
             print("more button tapped")
-            
-            
             //TODO: Implement code for completed task
-            
-            
-            
         }
         
         let lightBlue = UIColor(colorLiteralRed: 51/255, green: 100/255, blue: 204/255, alpha: 1.0)
         
         complete.backgroundColor = lightBlue
         
-        let delete = UITableViewRowAction(style: .Normal, title: "Delete") { action, index in
+        let delete = UITableViewRowAction(style: .Normal, title: deleteTitleString) { action, index in
             print("favorite button tapped")
             
             
@@ -265,10 +266,10 @@ extension FoldersTVC {
             
             
             
-            let addNotebookAlert = UIAlertController(title: "Are you sure you want this folder?",
+            let addNotebookAlert = UIAlertController(title: "Delete folder?",
                                                      message: "All Sub-folder and Tasks will also be deleted",
                                                      preferredStyle:UIAlertControllerStyle.Alert)
-            
+
 
             let deleteButton = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (deleteButton) in
                 //TODO: Implement code to delete a record
@@ -276,9 +277,10 @@ extension FoldersTVC {
                 
                 self.deleteFolder(indexPath)
 
-                
+
                 
             })
+
             
             
             
@@ -294,7 +296,18 @@ extension FoldersTVC {
         
         delete.backgroundColor = UIColor.redColor()
         
-        return [complete, delete]
+        let edit = UITableViewRowAction(style: .Normal, title: "edit") { (action, index) in
+            //TODO: Code for edit button
+            print("User pressed the edit button")
+            
+        }
+        
+        edit.backgroundColor = UIColor.orangeColor()
+        
+        
+        return [complete, edit, delete]
+        
+
     }
 
     
