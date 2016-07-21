@@ -26,7 +26,34 @@ class FoldersTVC: UITableViewController {
     
     
     func showMenu() {
-        //TODO: add code to show the meny pop-up. Ideally it comes down from the button in a pretty way but will accept just a normal pop-up if time pressed.
+        //Sign out...
+        
+        
+        // Create alert controller
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        
+        
+        // Create buttons for alert controller
+        let signOutAction = UIAlertAction(title: "Sign Out", style: UIAlertActionStyle.Default) { (alert) in
+            //TODO: User cancelled
+            print("User signed out..")
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (alert) in
+            //
+            print("User cancelled alert")
+        })
+        
+        // Add buttons to alert controller
+        alertController.addAction(signOutAction)
+        alertController.addAction(cancelAction)
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+        }
+        
     }
     
     func addFolder() {
