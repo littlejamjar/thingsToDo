@@ -12,6 +12,7 @@
 		2161D6B51D39CB7400D1CF6A /* SubFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161D6B11D39CB7300D1CF6A /* SubFolder.swift */; };
 		2161D6B61D39CB7400D1CF6A /* Folder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161D6B21D39CB7300D1CF6A /* Folder+CoreDataProperties.swift */; };
 		2161D6B71D39CB7400D1CF6A /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161D6B31D39CB7300D1CF6A /* Folder.swift */; };
+		2182BD9D1D42D599003533C0 /* SubFoldersTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2182BD9C1D42D599003533C0 /* SubFoldersTVC.swift */; };
 		21A2C2181D38747500BA708F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A2C2171D38747500BA708F /* AppDelegate.swift */; };
 		21A2C21A1D38747500BA708F /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A2C2191D38747500BA708F /* LoginVC.swift */; };
 		21A2C21D1D38747600BA708F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21A2C21B1D38747600BA708F /* Main.storyboard */; };
@@ -48,6 +49,7 @@
 		2161D6B11D39CB7300D1CF6A /* SubFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubFolder.swift; path = ../SubFolder.swift; sourceTree = "<group>"; };
 		2161D6B21D39CB7300D1CF6A /* Folder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Folder+CoreDataProperties.swift"; path = "../Folder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2161D6B31D39CB7300D1CF6A /* Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Folder.swift; path = ../Folder.swift; sourceTree = "<group>"; };
+		2182BD9C1D42D599003533C0 /* SubFoldersTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubFoldersTVC.swift; sourceTree = "<group>"; };
 		21A2C2141D38747500BA708F /* ThingsToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThingsToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21A2C2171D38747500BA708F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21A2C2191D38747500BA708F /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 			children = (
 				21A2C2191D38747500BA708F /* LoginVC.swift */,
 				21C196BD1D387D3B0057AEAF /* FoldersTVC.swift */,
+				2182BD9C1D42D599003533C0 /* SubFoldersTVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				2161D6B71D39CB7400D1CF6A /* Folder.swift in Sources */,
 				21C196C71D389C3F0057AEAF /* TabBarViewController.swift in Sources */,
 				21179E2C1D3CC147008023EB /* ConvenienceUIFunctions.swift in Sources */,
+				2182BD9D1D42D599003533C0 /* SubFoldersTVC.swift in Sources */,
 				21C196C91D389CA20057AEAF /* TransitioningObject.swift in Sources */,
 				21A2C21A1D38747500BA708F /* LoginVC.swift in Sources */,
 				2161D6B61D39CB7400D1CF6A /* Folder+CoreDataProperties.swift in Sources */,

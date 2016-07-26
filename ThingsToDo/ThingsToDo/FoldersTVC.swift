@@ -103,6 +103,23 @@ class FoldersTVC: UITableViewController {
         
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print("segue = \(segue.identifier)")
+        
+        if segue.identifier == "segueToSubFolder" {
+            let destinationVC = segue.destinationViewController as! SubFoldersTVC
+            //destinationVC.folder = tableView.indexPathForSelectedRow
+            print("prepare indexPathForSelectedRow = \(tableView.indexPathForSelectedRow?.row)")
+            
+            
+            
+            
+        }
+        
+        
+        
+    }
+    
     func createFolder(title: String){    
         print("createFolder = \(title)")
         
@@ -241,6 +258,8 @@ extension FoldersTVC {
             folders = results as! [NSManagedObject]
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
+        } catch {
+            print("some other error")
         }
         
     }
@@ -289,6 +308,8 @@ extension FoldersTVC {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //TODO: Implement code for when users select a row
+        
+        print("didSelectRowAtIndexPath = \(indexPath.row)")
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -408,6 +429,25 @@ extension FoldersTVC {
                             forRowAtIndexPath indexPath: NSIndexPath) {
         // you need to implement this method too or you can't swipe to display the actions
         
+    }
+    
+    
+}
+
+extension FoldersTVC  {
+    
+    func textFieldChanged(sender: UITextField) {
+        
+        //http://stackoverflow.com/questions/24474762/check-on-uialertcontroller-textfield-for-enabling-the-button
+        
+        //self.actionToEnable?.enabled = (sender.text! != "Validation")
+        if sender.text != "" {
+            self.actionToEnable?.enabled = true
+        } else {
+            self.actionToEnable?.enabled = false
+        }
+        
+        //return (self.actionToEnable?.enabled)!
     }
 }
 
