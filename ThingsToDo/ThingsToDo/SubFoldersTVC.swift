@@ -29,6 +29,41 @@ class SubFoldersTVC: UITableViewController {
         super.viewDidLoad()
         
         
+        
+        // Set the Managed Object Context
+        moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        
+        
+        
+        let fetchRequest = NSFetchRequest(entityName: "SubFolder")
+        //fetchRequest.predicate = NSPredicate(format: "title = %@", argumentArray: ["jim"])
+        
+        
+        if folder?.title != nil {
+            print("it's not nil!!!")
+        } else {
+            print("folder is NIL!!1")
+        }
+        
+        let pred = NSPredicate(format: "folder == %@", folder!)
+        
+        
+        fetchRequest.predicate = pred
+        
+        
+        
+        //3
+        do {
+            let results = try moc.executeFetchRequest(fetchRequest)
+            subFolders = results as! [NSManagedObject]
+            print("subFolders.count = \(subFolders.count)")
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        } catch {
+            print("some other error")
+        }
+        
+        
         //TODO: Reference code. Delete once done.
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -125,14 +160,23 @@ class SubFoldersTVC: UITableViewController {
             return
         }
         
-        let newSubFolder = NSManagedObject(entity: entity, insertIntoManagedObjectContext: moc)
+        let newSubFolder = NSManagedObject(entity: entity, insertIntoManagedObjectContext: moc) as! SubFolder
         
-        newSubFolder.setValue(title, forKey: "title")
-        newSubFolder.setValue(NSDate(), forKey: "creationDate")
-        newSubFolder.setValue(false, forKey: "isComplete")
-        newSubFolder.setValue(false, forKey: "isHot")
-        newSubFolder.setValue(nil, forKey: "dueDateTime")
-        newSubFolder.setValue(NSManagedObject(), forKey: "folder")
+        
+        newSubFolder.title = title
+        newSubFolder.creationDate = NSDate()
+        newSubFolder.isComplete = false
+        newSubFolder.isHot = false
+        newSubFolder.dueDateTime = nil
+        newSubFolder.folder = folder
+        
+        
+//        newSubFolder.setValue(title, forKey: "title")
+//        newSubFolder.setValue(NSDate(), forKey: "creationDate")
+//        newSubFolder.setValue(false, forKey: "isComplete")
+//        newSubFolder.setValue(false, forKey: "isHot")
+//        newSubFolder.setValue(nil, forKey: "dueDateTime")
+//        newSubFolder.setValue(NSManagedObject(), forKey: "folder")
         
         
         
@@ -156,37 +200,7 @@ class SubFoldersTVC: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Set the Managed Object Context
-        moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        
-        
-        
-        let fetchRequest = NSFetchRequest(entityName: "SubFolder")
-        //fetchRequest.predicate = NSPredicate(format: "title = %@", argumentArray: ["jim"])
-        
-        
-        if folder?.title != nil {
-            print("it's not nil!!!")
-        } else {
-            print("folder is NIL!!1")
-        }
-        let pred = NSPredicate(format: "folder.title == %@", "jim")
-        
-        
-        fetchRequest.predicate = pred
-        
-        
-        
-        //3
-        do {
-            let results = try moc.executeFetchRequest(fetchRequest)
-            subFolders = results as! [NSManagedObject]
-            print("subFolders.count = \(subFolders.count)")
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-        } catch {
-            print("some other error")
-        }
+
     }
     
     
