@@ -110,8 +110,9 @@ class FoldersTVC: UITableViewController {
             let destinationVC = segue.destinationViewController as! SubFoldersTVC
             //destinationVC.folder = tableView.indexPathForSelectedRow
             print("prepare indexPathForSelectedRow = \(tableView.indexPathForSelectedRow?.row)")
+            //destinationVC.folder = folders[(tableView.indexPathForSelectedRow?.row)!] as! Folder
             
-            
+            destinationVC.folder = folders[(tableView.indexPathForSelectedRow?.row)!] as? Folder
             
             
         }

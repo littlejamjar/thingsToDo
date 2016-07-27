@@ -16,7 +16,7 @@ class SubFoldersTVC: UITableViewController {
     var moc: NSManagedObjectContext!
     var subFolders = [NSManagedObject]()
     var subFolder: SubFolder?
-    
+    var folder: Folder?
     
     //let searchController = UISearchController(searchResultsController: nil) //FIXME: argument of nil means use current view i think???
     
@@ -64,7 +64,7 @@ class SubFoldersTVC: UITableViewController {
         
         // Add TextField to the Alert Controller
     
-        
+        print("folder.title = \(subFolder?.folder)")
         
         
         
@@ -132,7 +132,7 @@ class SubFoldersTVC: UITableViewController {
         newSubFolder.setValue(false, forKey: "isComplete")
         newSubFolder.setValue(false, forKey: "isHot")
         newSubFolder.setValue(nil, forKey: "dueDateTime")
-        //newSubFolder.setValue(false, forKey: "folder")
+        newSubFolder.setValue(NSManagedObject(), forKey: "folder")
         
         
         
@@ -159,13 +159,29 @@ class SubFoldersTVC: UITableViewController {
         // Set the Managed Object Context
         moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
+        
+        
         let fetchRequest = NSFetchRequest(entityName: "SubFolder")
+        //fetchRequest.predicate = NSPredicate(format: "title = %@", argumentArray: ["jim"])
+        
+        
+        if folder?.title != nil {
+            print("it's not nil!!!")
+        } else {
+            print("folder is NIL!!1")
+        }
+        let pred = NSPredicate(format: "folder.title == %@", "jim")
+        
+        
+        fetchRequest.predicate = pred
+        
         
         
         //3
         do {
             let results = try moc.executeFetchRequest(fetchRequest)
             subFolders = results as! [NSManagedObject]
+            print("subFolders.count = \(subFolders.count)")
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         } catch {
@@ -231,8 +247,99 @@ extension SubFoldersTVC {
         
     }
     
-
     
+    func deleteSubFolder(indexPath: NSIndexPath) {
+        
+        let subFolderToDelete = self.subFolders[indexPath.row]
+        
+        self.moc.deleteObject(subFolderToDelete)
+        print("object should have deleted")
+        
+        do {
+            try self.moc.save()
+            let index = subFolders.indexOf(subFolderToDelete)
+            subFolders.removeAtIndex(index!)
+            
+        } catch {
+            print("Error: Failed to save context after deletng Folder")
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+            
+            print("shit should have reloaded itself....")
+        }
+    }
+    
+    
+    
+    
+
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let completeTitleString = "✓ "
+        let deleteTitleString = "x "
+        
+        
+        
+        
+        let complete = UITableViewRowAction(style: .Normal, title: completeTitleString) { action, index in
+            print("complete button tapped")
+            //TODO: Implement code for completed task
+        }
+        
+        let lightBlue = UIColor(colorLiteralRed: 51/255, green: 100/255, blue: 204/255, alpha: 1.0)
+        
+        complete.backgroundColor = lightBlue
+        
+        let delete = UITableViewRowAction(style: .Normal, title: deleteTitleString) { action, index in
+            print("delete button tapped")
+            
+            
+            //TODO: Implement delete folder code. Include code for "yes"/"no"
+            
+            
+            
+            let addNotebookAlert = UIAlertController(title: "Delete Sub-folder?",
+                                                     message: "All Tasks will also be deleted",
+                                                     preferredStyle:UIAlertControllerStyle.Alert)
+            
+            
+            let deleteButton = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (deleteButton) in
+                //TODO: Implement code to delete a record
+                
+                
+                self.deleteSubFolder(indexPath)
+                
+                
+                
+            })
+            
+            
+            
+            
+            let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+            
+            addNotebookAlert.addAction(deleteButton)
+            addNotebookAlert.addAction(cancelButton)
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                self.presentViewController(addNotebookAlert, animated: true, completion: nil)
+            }
+        }
+        
+        delete.backgroundColor = UIColor.redColor()
+        
+        let edit = UITableViewRowAction(style: .Normal, title: "edit") { (action, index) in
+            //TODO: Code for edit button
+            print("User pressed the edit button")
+            
+        }
+        
+        edit.backgroundColor = UIColor.orangeColor()
+        
+        
+        return [complete, edit, delete]
+    }
     
     
     override func tableView(tableView: UITableView,
