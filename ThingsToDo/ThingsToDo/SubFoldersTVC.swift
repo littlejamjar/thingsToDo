@@ -38,14 +38,17 @@ class SubFoldersTVC: UITableViewController {
         let fetchRequest = NSFetchRequest(entityName: "SubFolder")
         //fetchRequest.predicate = NSPredicate(format: "title = %@", argumentArray: ["jim"])
         
-        
+        //FIXME: what is this doing?
         if folder?.title != nil {
             print("it's not nil!!!")
+            self.navigationItem.title = folder!.title
+            
         } else {
             print("folder is NIL!!1")
         }
         
         let pred = NSPredicate(format: "folder == %@", folder!)
+        
         
         
         fetchRequest.predicate = pred
@@ -70,7 +73,7 @@ class SubFoldersTVC: UITableViewController {
         
         
         // -- Setup navigation bar appearance
-        self.navigationItem.title = "Things To Do"  //TODO: Should this say something like "Folders?" or should that be an informal name?
+        //self.navigationItem.title = "Things To Do"  //TODO: Should this say something like "Folders?" or should that be an informal name?
         
         
         let addFolderButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(SubFoldersTVC.addSubFolder))
