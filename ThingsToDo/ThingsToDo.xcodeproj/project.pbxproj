@@ -17,7 +17,6 @@
 		21A2C2301D38747600BA708F /* ThingsToDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A2C22F1D38747600BA708F /* ThingsToDoTests.swift */; };
 		21A2C23B1D38747600BA708F /* ThingsToDoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A2C23A1D38747600BA708F /* ThingsToDoUITests.swift */; };
 		21C196BE1D387D3B0057AEAF /* FoldersTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C196BD1D387D3B0057AEAF /* FoldersTVC.swift */; };
-		21C196C71D389C3F0057AEAF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C196C61D389C3F0057AEAF /* TabBarViewController.swift */; };
 		21C196C91D389CA20057AEAF /* TransitioningObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C196C81D389CA20057AEAF /* TransitioningObject.swift */; };
 		21E9D47B1D4C256600ACCF43 /* TasksTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D47A1D4C256600ACCF43 /* TasksTVC.swift */; };
 		21E9D48A1D4C4FDE00ACCF43 /* Folder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D4841D4C4FDE00ACCF43 /* Folder+CoreDataProperties.swift */; };
@@ -26,6 +25,7 @@
 		21E9D48D1D4C4FDE00ACCF43 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D4871D4C4FDE00ACCF43 /* Task.swift */; };
 		21E9D48E1D4C4FDE00ACCF43 /* SubFolder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D4881D4C4FDE00ACCF43 /* SubFolder+CoreDataProperties.swift */; };
 		21E9D48F1D4C4FDE00ACCF43 /* SubFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D4891D4C4FDE00ACCF43 /* SubFolder.swift */; };
+		21E9D4911D4C55CA00ACCF43 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D4901D4C55CA00ACCF43 /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +62,6 @@
 		21A2C23A1D38747600BA708F /* ThingsToDoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingsToDoUITests.swift; sourceTree = "<group>"; };
 		21A2C23C1D38747600BA708F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21C196BD1D387D3B0057AEAF /* FoldersTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldersTVC.swift; sourceTree = "<group>"; };
-		21C196C61D389C3F0057AEAF /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarViewController.swift; path = ../TabBarViewController.swift; sourceTree = "<group>"; };
 		21C196C81D389CA20057AEAF /* TransitioningObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitioningObject.swift; sourceTree = "<group>"; };
 		21E9D47A1D4C256600ACCF43 /* TasksTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksTVC.swift; sourceTree = "<group>"; };
 		21E9D4841D4C4FDE00ACCF43 /* Folder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Folder+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -71,6 +70,7 @@
 		21E9D4871D4C4FDE00ACCF43 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		21E9D4881D4C4FDE00ACCF43 /* SubFolder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SubFolder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		21E9D4891D4C4FDE00ACCF43 /* SubFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubFolder.swift; sourceTree = "<group>"; };
+		21E9D4901D4C55CA00ACCF43 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,10 +121,10 @@
 		21A2C2161D38747500BA708F /* ThingsToDo */ = {
 			isa = PBXGroup;
 			children = (
+				21A2C2171D38747500BA708F /* AppDelegate.swift */,
 				21C196C01D388BCF0057AEAF /* Model */,
 				21C196C11D388BD60057AEAF /* Controller */,
 				21C196BF1D388BC70057AEAF /* View */,
-				21A2C2171D38747500BA708F /* AppDelegate.swift */,
 				21A2C2261D38747600BA708F /* Info.plist */,
 			);
 			path = ThingsToDo;
@@ -151,8 +151,8 @@
 		21C196BF1D388BC70057AEAF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				21C196C61D389C3F0057AEAF /* TabBarViewController.swift */,
 				21C196C81D389CA20057AEAF /* TransitioningObject.swift */,
+				21E9D4901D4C55CA00ACCF43 /* TabBarViewController.swift */,
 				21A2C21B1D38747600BA708F /* Main.storyboard */,
 				21A2C2211D38747600BA708F /* Assets.xcassets */,
 				21A2C2231D38747600BA708F /* LaunchScreen.storyboard */,
@@ -317,11 +317,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21C196C71D389C3F0057AEAF /* TabBarViewController.swift in Sources */,
 				21E9D48B1D4C4FDE00ACCF43 /* Folder.swift in Sources */,
 				2182BD9D1D42D599003533C0 /* SubFoldersTVC.swift in Sources */,
 				21C196C91D389CA20057AEAF /* TransitioningObject.swift in Sources */,
 				21E9D48D1D4C4FDE00ACCF43 /* Task.swift in Sources */,
+				21E9D4911D4C55CA00ACCF43 /* TabBarViewController.swift in Sources */,
 				21E9D48C1D4C4FDE00ACCF43 /* Task+CoreDataProperties.swift in Sources */,
 				21E9D48E1D4C4FDE00ACCF43 /* SubFolder+CoreDataProperties.swift in Sources */,
 				21A2C21A1D38747500BA708F /* LoginVC.swift in Sources */,

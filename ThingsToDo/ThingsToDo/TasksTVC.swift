@@ -156,7 +156,6 @@ class TasksTVC: UITableViewController {
     
     
     func createTask(text: String){
-        print("createTask = \(title)")
         
         guard let entity = NSEntityDescription.entityForName("Task", inManagedObjectContext: moc) else {
             print("Error: Could not create entity")
@@ -271,28 +270,28 @@ extension TasksTVC {
     }
     
     
-//    func deleteSubFolder(indexPath: NSIndexPath) {
-//        
-//        let subFolderToDelete = self.subFolders[indexPath.row]
-//        
-//        self.moc.deleteObject(subFolderToDelete)
-//        print("object should have deleted")
-//        
-//        do {
-//            try self.moc.save()
-//            let index = subFolders.indexOf(subFolderToDelete)
-//            subFolders.removeAtIndex(index!)
-//            
-//        } catch {
-//            print("Error: Failed to save context after deletng Folder")
-//        }
-//        
-//        dispatch_async(dispatch_get_main_queue()) {
-//            self.tableView.reloadData()
-//            
-//            print("shit should have reloaded itself....")
-//        }
-//    }
+    func deleteTask(indexPath: NSIndexPath) {
+        
+        let taskToDelete = self.tasks[indexPath.row]
+        
+        self.moc.deleteObject(taskToDelete)
+        print("object should have deleted")
+        
+        do {
+            try self.moc.save()
+            let index = tasks.indexOf(taskToDelete)
+            tasks.removeAtIndex(index!)
+            
+        } catch {
+            print("Error: Failed to save context after deletng Folder")
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+            
+            print("shit should have reloaded itself....")
+        }
+    }
     
     
     
@@ -328,12 +327,8 @@ extension TasksTVC {
             
             
             let deleteButton = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (deleteButton) in
-                //TODO: Implement code to delete a record
                 
-                
-                print("TODO: Implement delete code")
-                
-                //self.deleteSubFolder(indexPath)
+                self.deleteTask(indexPath)
                 
                 
                 
