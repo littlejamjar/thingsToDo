@@ -1,22 +1,22 @@
 //
-//  SubFoldersTVC.swift
+//  TasksTVC.swift
 //  ThingsToDo
 //
-//  Created by james wikaira on 23/07/16.
+//  Created by james wikaira on 30/07/16.
 //  Copyright © 2016 james wikaira. All rights reserved.
 //
+
 import UIKit
 import CoreData
 
-
-class SubFoldersTVC: UITableViewController {
-
+class TasksTVC: UITableViewController {
+    
     // Property declarations
     var actionToEnable: UIAlertAction?
     var moc: NSManagedObjectContext!
-    var subFolders = [NSManagedObject]()
+    var tasks = [NSManagedObject]()
+    var task: Task?
     var subFolder: SubFolder?
-    var folder: Folder?
     
     //let searchController = UISearchController(searchResultsController: nil) //FIXME: argument of nil means use current view i think???
     
@@ -35,19 +35,19 @@ class SubFoldersTVC: UITableViewController {
         
         
         
-        let fetchRequest = NSFetchRequest(entityName: "SubFolder")
+        let fetchRequest = NSFetchRequest(entityName: "Task")
         //fetchRequest.predicate = NSPredicate(format: "title = %@", argumentArray: ["jim"])
         
         //FIXME: what is this doing?
-        if folder?.title != nil {
+        if subFolder?.title != nil {
             print("it's not nil!!!")
-            self.navigationItem.title = folder!.title
+            self.navigationItem.title = subFolder!.title
             
         } else {
-            print("folder is NIL!!1")
+            print("subfolder is NIL!!")
         }
         
-        let pred = NSPredicate(format: "folder == %@", folder!)
+        let pred = NSPredicate(format: "subFolder == %@", subFolder!)
         
         
         
@@ -58,8 +58,8 @@ class SubFoldersTVC: UITableViewController {
         //3
         do {
             let results = try moc.executeFetchRequest(fetchRequest)
-            subFolders = results as! [NSManagedObject]
-            print("subFolders.count = \(subFolders.count)")
+            tasks = results as! [NSManagedObject]
+            print("subFolders.count = \(tasks.count)")
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         } catch {
@@ -76,7 +76,7 @@ class SubFoldersTVC: UITableViewController {
         //self.navigationItem.title = "Things To Do"  //TODO: Should this say something like "Folders?" or should that be an informal name?
         
         
-        let addFolderButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(SubFoldersTVC.addSubFolder))
+        let addFolderButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(TasksTVC.addTask))
         //let searchButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: #selector(SubFoldersTVC.search))
         //let menuButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: #selector(SubFoldersTVC.showMenu)) //TODO: Get a better menu picture
         
@@ -91,18 +91,18 @@ class SubFoldersTVC: UITableViewController {
         //tableView.tableHeaderView = searchController.searchBar
         
         
-        self.navigationController!.navigationBar.barTintColor = UIColor.greenColor()
+        //self.navigationController!.navigationBar.barTintColor = UIColor.greenColor()
         
     }
     
-    func addSubFolder() {
+    func addTask() {
         
         // Creat Alert Controller
-        let alertController = UIAlertController(title: "Add Sub Folder", message: "Enter Sub Folder title", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Add Task", message: "Enter Task title", preferredStyle: UIAlertControllerStyle.Alert)
         
         // Add TextField to the Alert Controller
-    
-        print("folder.title = \(subFolder?.folder)")
+        
+        //print("folder.title = \(subFolder?.folder)")
         
         
         
@@ -118,20 +118,20 @@ class SubFoldersTVC: UITableViewController {
         // Create the Cancel button
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) in
             //TODO: User cancelled
-            print("User cancelled the new sub folder")
+            print("User cancelled the new Task")
         }
         
         // Create the Add button
         let addAction = UIAlertAction(title: "Add", style: UIAlertActionStyle.Default) { (alert) in
             //TODO: User cancelled
-            print("Should have made the new sub folder")
+            print("Should have made the new Task")
             
             guard let title = alertController.textFields![0].text else {
                 print("No title")
                 return
             }
             
-            self.createSubFolder(title)
+            self.createTask(title)
         }
         
         // Add buttons to the Alert Controller
@@ -152,56 +152,47 @@ class SubFoldersTVC: UITableViewController {
         
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print("segue = \(segue.identifier)")
-        
-        if segue.identifier == "segueToTasks" {
-            let destinationVC = segue.destinationViewController as! TasksTVC
-            //destinationVC.folder = tableView.indexPathForSelectedRow
-            print("prepare indexPathForSelectedRow = \(tableView.indexPathForSelectedRow?.row)")
-            //destinationVC.folder = folders[(tableView.indexPathForSelectedRow?.row)!] as! Folder
-            
-            destinationVC.subFolder = subFolders[(tableView.indexPathForSelectedRow?.row)!] as? SubFolder
-            
-            
-        }
-        
-        
-        
-    }
     
-    func createSubFolder(title: String){
-        print("createFolder = \(title)")
+    
+    
+    func createTask(text: String){
+        print("createTask = \(title)")
         
-        guard let entity = NSEntityDescription.entityForName("SubFolder", inManagedObjectContext: moc) else {
+        guard let entity = NSEntityDescription.entityForName("Task", inManagedObjectContext: moc) else {
             print("Error: Could not create entity")
             return
         }
         
-        let newSubFolder = NSManagedObject(entity: entity, insertIntoManagedObjectContext: moc) as! SubFolder
+        let newTask = NSManagedObject(entity: entity, insertIntoManagedObjectContext: moc) as! Task
         
         
-        newSubFolder.title = title
-        newSubFolder.creationDate = NSDate()
-        newSubFolder.isComplete = false
-        newSubFolder.isHot = false
-        newSubFolder.dueDateTime = nil
-        newSubFolder.folder = folder
+        newTask.text = text
+        newTask.creationDate = NSDate()
+        newTask.isComplete = false
+        newTask.isHot = false
+        newTask.dueDateTime = nil
+        newTask.subFolder = subFolder
         
         
-//        newSubFolder.setValue(title, forKey: "title")
-//        newSubFolder.setValue(NSDate(), forKey: "creationDate")
-//        newSubFolder.setValue(false, forKey: "isComplete")
-//        newSubFolder.setValue(false, forKey: "isHot")
-//        newSubFolder.setValue(nil, forKey: "dueDateTime")
-//        newSubFolder.setValue(NSManagedObject(), forKey: "folder")
+        //        newSubFolder.setValue(title, forKey: "title")
+        //        newSubFolder.setValue(NSDate(), forKey: "creationDate")
+        //        newSubFolder.setValue(false, forKey: "isComplete")
+        //        newSubFolder.setValue(false, forKey: "isHot")
+        //        newSubFolder.setValue(nil, forKey: "dueDateTime")
+        //        newSubFolder.setValue(NSManagedObject(), forKey: "folder")
         
+        
+//        @NSManaged var text: String?
+//        @NSManaged var isComplete: NSNumber?
+//        @NSManaged var isHot: NSNumber?
+//        @NSManaged var dueDateTime: NSDate?
+//        @NSManaged var subFolder: SubFolder?
         
         
         
         do{
             try moc.save()
-            subFolders.append(newSubFolder)
+            tasks.append(newTask)
         } catch {
             print("Error: Could not save new folder from Managed Object Context")
         }
@@ -218,16 +209,15 @@ class SubFoldersTVC: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-
+        
     }
-    
-    
-    
-    
+
 }
 
+
+
 //MARK: TableView Functions
-extension SubFoldersTVC {
+extension TasksTVC {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -236,20 +226,19 @@ extension SubFoldersTVC {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-//        // Check whether user has started search in search bar
-//        if searchController.active && searchController.searchBar.text != "" {
-//            return filteredFolders.count
-//        } else {
-//            return folders.count
-//        }
+        //        // Check whether user has started search in search bar
+        //        if searchController.active && searchController.searchBar.text != "" {
+        //            return filteredFolders.count
+        //        } else {
+        //            return folders.count
+        //        }
         
         
         
-        print("subFolders.count = \(subFolders.count)")
+        print("subFolders.count = \(tasks.count)")
         
         
-        return subFolders.count
-
+        return tasks.count
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -259,14 +248,22 @@ extension SubFoldersTVC {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         
-        var subFolder: SubFolder
+        var task: Task
         
-        subFolder = subFolders[indexPath.row] as! SubFolder
-    
+        task = tasks[indexPath.row] as! Task
+        
         
         
         //cell.textLabel?.text = folder.title
-        cell.textLabel?.text = subFolder.valueForKey("title") as? String
+        cell.textLabel?.text = task.valueForKey("text") as? String
+        
+        
+        
+        cell.backgroundColor = UIColor.blueColor()
+        
+//        if (cell.textLabel?.text = "test cell") != nil{
+//            print("textLabel is not nil")
+//        }
         
         return cell
         
@@ -274,33 +271,33 @@ extension SubFoldersTVC {
     }
     
     
-    func deleteSubFolder(indexPath: NSIndexPath) {
-        
-        let subFolderToDelete = self.subFolders[indexPath.row]
-        
-        self.moc.deleteObject(subFolderToDelete)
-        print("object should have deleted")
-        
-        do {
-            try self.moc.save()
-            let index = subFolders.indexOf(subFolderToDelete)
-            subFolders.removeAtIndex(index!)
-            
-        } catch {
-            print("Error: Failed to save context after deletng Folder")
-        }
-        
-        dispatch_async(dispatch_get_main_queue()) {
-            self.tableView.reloadData()
-            
-            print("shit should have reloaded itself....")
-        }
-    }
+//    func deleteSubFolder(indexPath: NSIndexPath) {
+//        
+//        let subFolderToDelete = self.subFolders[indexPath.row]
+//        
+//        self.moc.deleteObject(subFolderToDelete)
+//        print("object should have deleted")
+//        
+//        do {
+//            try self.moc.save()
+//            let index = subFolders.indexOf(subFolderToDelete)
+//            subFolders.removeAtIndex(index!)
+//            
+//        } catch {
+//            print("Error: Failed to save context after deletng Folder")
+//        }
+//        
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.tableView.reloadData()
+//            
+//            print("shit should have reloaded itself....")
+//        }
+//    }
     
     
     
     
-
+    
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let completeTitleString = "✓ "
         let deleteTitleString = "x "
@@ -325,8 +322,8 @@ extension SubFoldersTVC {
             
             
             
-            let addNotebookAlert = UIAlertController(title: "Delete Sub-folder?",
-                                                     message: "All Tasks will also be deleted",
+            let addNotebookAlert = UIAlertController(title: "Delete Task?",
+                                                     message: nil,
                                                      preferredStyle:UIAlertControllerStyle.Alert)
             
             
@@ -334,7 +331,9 @@ extension SubFoldersTVC {
                 //TODO: Implement code to delete a record
                 
                 
-                self.deleteSubFolder(indexPath)
+                print("TODO: Implement delete code")
+                
+                //self.deleteSubFolder(indexPath)
                 
                 
                 
@@ -382,7 +381,7 @@ extension SubFoldersTVC {
     }
 }
 
-extension SubFoldersTVC  {
+extension TasksTVC  {
     
     func textFieldChanged(sender: UITextField) {
         
