@@ -78,20 +78,21 @@ class TasksTVC: UITableViewController {
         
         let addFolderButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(TasksTVC.addTask))
         //let searchButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: #selector(SubFoldersTVC.search))
-        //let menuButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: #selector(SubFoldersTVC.showMenu)) //TODO: Get a better menu picture
+        let addDueDateTimeButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Organize, target: self, action: #selector(TasksTVC.addDueDateTime)) //TODO: Get a better menu picture
         
-        //let rightBarButtonItemArray = [ addFolderButtonItem, searchButtonItem ]
+        let rightBarButtonItemArray = [ addFolderButtonItem, addDueDateTimeButtonItem ]
         
-        self.navigationItem.rightBarButtonItems = [addFolderButtonItem]
-        //self.navigationItem.leftBarButtonItem = menuButtonItem
+        self.navigationItem.rightBarButtonItems = rightBarButtonItemArray
+        //self.navigationItem.leftBarButtonItem = addDueDateTimeButtonItem
         
         //searchController.searchResultsUpdater = self
         //searchController.dimsBackgroundDuringPresentation = false
         //definesPresentationContext = true
         //tableView.tableHeaderView = searchController.searchBar
         
-        
-        //self.navigationController!.navigationBar.barTintColor = UIColor.greenColor()
+    }
+    
+    func addDueDateTime(){
         
     }
     
@@ -171,22 +172,6 @@ class TasksTVC: UITableViewController {
         newTask.isHot = false
         newTask.dueDateTime = nil
         newTask.subFolder = subFolder
-        
-        
-        //        newSubFolder.setValue(title, forKey: "title")
-        //        newSubFolder.setValue(NSDate(), forKey: "creationDate")
-        //        newSubFolder.setValue(false, forKey: "isComplete")
-        //        newSubFolder.setValue(false, forKey: "isHot")
-        //        newSubFolder.setValue(nil, forKey: "dueDateTime")
-        //        newSubFolder.setValue(NSManagedObject(), forKey: "folder")
-        
-        
-//        @NSManaged var text: String?
-//        @NSManaged var isComplete: NSNumber?
-//        @NSManaged var isHot: NSNumber?
-//        @NSManaged var dueDateTime: NSDate?
-//        @NSManaged var subFolder: SubFolder?
-        
         
         
         do{

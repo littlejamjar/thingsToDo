@@ -18,7 +18,7 @@ class SubFoldersTVC: UITableViewController {
     var subFolder: SubFolder?
     var folder: Folder?
     
-    //let searchController = UISearchController(searchResultsController: nil) //FIXME: argument of nil means use current view i think???
+    let searchController = UISearchController(searchResultsController: nil) //FIXME: argument of nil means use current view i think???
     
     var filteredSubFolders = [SubFolder]()
     
@@ -85,13 +85,13 @@ class SubFoldersTVC: UITableViewController {
         self.navigationItem.rightBarButtonItems = [addFolderButtonItem]
         //self.navigationItem.leftBarButtonItem = menuButtonItem
         
-        //searchController.searchResultsUpdater = self
-        //searchController.dimsBackgroundDuringPresentation = false
-        //definesPresentationContext = true
-        //tableView.tableHeaderView = searchController.searchBar
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
         
         
-        self.navigationController!.navigationBar.barTintColor = UIColor.greenColor()
+        //self.navigationController!.navigationBar.barTintColor = UIColor.greenColor()
         
     }
     
@@ -236,19 +236,12 @@ extension SubFoldersTVC {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-//        // Check whether user has started search in search bar
-//        if searchController.active && searchController.searchBar.text != "" {
-//            return filteredFolders.count
-//        } else {
-//            return folders.count
-//        }
-        
-        
-        
-        print("subFolders.count = \(subFolders.count)")
-        
-        
+        // Check whether user has started search in search bar
+        if searchController.active && searchController.searchBar.text != "" {
+            return filteredSubFolders.count
+        } else {
         return subFolders.count
+    }
 
     }
     
@@ -263,14 +256,15 @@ extension SubFoldersTVC {
         
         subFolder = subFolders[indexPath.row] as! SubFolder
     
-        
-        
+        if searchController.active && searchController.searchBar.text != "" {
+            subFolder = filteredSubFolders[indexPath.row]
+        } else {
+            subFolder = subFolders[indexPath.row] as! SubFolder
+        }
         //cell.textLabel?.text = folder.title
         cell.textLabel?.text = subFolder.valueForKey("title") as? String
         
         return cell
-        
-        
     }
     
     
@@ -380,7 +374,32 @@ extension SubFoldersTVC {
         // you need to implement this method too or you can't swipe to display the actions
         
     }
+    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        print("before filteredFolders = \(filteredSubFolders.count)")
+        
+        
+        filteredSubFolders = (subFolders as! [SubFolder]).filter { obj in
+            let title = obj.title
+            let contains =  title?.lowercaseString.containsString(searchText.lowercaseString)
+            print("title = \(title), contains = \(contains)")
+            
+            return contains!
+        }
+        
+        print("after filteredFolders = \(filteredSubFolders.count)")
+        
+        tableView.reloadData()
+    }
 }
+
+//MARK: Search Bar Extension
+extension SubFoldersTVC: UISearchResultsUpdating {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
+
 
 extension SubFoldersTVC  {
     
