@@ -18,15 +18,76 @@ class TasksTVC: UITableViewController {
     var task: Task?
     var subFolder: SubFolder?
     
+    
+    var taskParent: Task?
+    
     //let searchController = UISearchController(searchResultsController: nil) //FIXME: argument of nil means use current view i think???
     
     var filteredSubFolders = [SubFolder]()
     
     
     
+    func createSubTask(){
+        
+        taskParent = tasks[0] as? Task
+        
+        let text = "test subtask"
+        
+        print("insde createSubTask")
+        print("taskParent's subtasks = \(taskParent?.subTasks?.count)")
+        
+        
+        guard let entity = NSEntityDescription.entityForName("SubTask", inManagedObjectContext: moc) else {
+            print("Error: Could not create entity")
+            return
+        }
+        
+        let newSubTask = NSManagedObject(entity: entity, insertIntoManagedObjectContext: moc) as! SubTask
+        
+        
+        newSubTask.text = text
+        newSubTask.creationDate = NSDate()
+        newSubTask.isComplete = false
+        newSubTask.isHot = false
+        newSubTask.dueDateTime = nil
+        newSubTask.task = taskParent
+        
+        
+        do{
+            try moc.save()
+            tasks.append(newSubTask)    //FIXME: What about this???
+        } catch {
+            print("Error: Could not save new folder from Managed Object Context")
+        }
+        
+        
+        
+//        dispatch_async(dispatch_get_main_queue()) {
+//            //self.tableView.reloadData()
+//            
+//            self.tableView.beginUpdates()
+//            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+//            self.tableView.endUpdates()
+//            
+//        }
+        
+        
+        
+    }
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
@@ -78,7 +139,7 @@ class TasksTVC: UITableViewController {
         
         let addFolderButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(TasksTVC.addTask))
         //let searchButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: #selector(SubFoldersTVC.search))
-        let addDueDateTimeButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Organize, target: self, action: #selector(TasksTVC.addDueDateTime)) //TODO: Get a better menu picture
+        let addDueDateTimeButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Organize, target: self, action: #selector(TasksTVC.createSubTask)) //TODO: Get a better menu picture
         
         let rightBarButtonItemArray = [ addFolderButtonItem, addDueDateTimeButtonItem ]
         
@@ -89,6 +150,15 @@ class TasksTVC: UITableViewController {
         //searchController.dimsBackgroundDuringPresentation = false
         //definesPresentationContext = true
         //tableView.tableHeaderView = searchController.searchBar
+        
+        
+        
+        
+        
+        // Testing SubTasks
+        //createSubTask(<#T##text: String##String#>, indexPath: <#T##NSIndexPath#>)
+        
+        
         
     }
     
@@ -153,8 +223,7 @@ class TasksTVC: UITableViewController {
         
     }
     
-    
-    
+
     
     func createTask(text: String){
         
@@ -205,7 +274,11 @@ extension TasksTVC {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
+        //return 1
+        
+        
         return 1
+        
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -227,12 +300,61 @@ extension TasksTVC {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //TODO: Implement code for when users select a row
+        
+        
+        //should start here. Get the indexPath, append and reload..simple... :(
+        
+        print("indexPath.row = \(indexPath.row)")
+        
+        //let sT = SubTask.
+        
+        taskParent = self.tasks[indexPath.row] as? Task
+        
+        
+        print("taskParent.text = \(taskParent!.text)")
+        
+        //createSubTask("not used", indexPath: indexPath)
+//        
+//        
+//        
+//        
+
+//        
+//        
+//        // the data of the childs for the specific parent cell.
+//        let currentSubItems = self.dataSource[parent].childs
+//        
+//        // update the state of the cell.
+//        self.dataSource[parent].state = .Expanded
+//        
+//        // position to start to insert rows.
+//        var insertPos = index + 1
+//        
+//        let indexPaths = (0..<currentSubItems.count).map { _ -> NSIndexPath in
+//            let indexPath = NSIndexPath(forRow: insertPos, inSection: 0)
+//            insertPos += 1
+//            return indexPath
+//        }
+//        
+//        // insert the new rows
+//        self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Fade)
+//        
+//        // update the total of rows
+//        self.total += currentSubItems.count
+        
+        
     }
+
+
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         
         var task: Task
+        
+        print("indexPath.row = \(indexPath.row)")
+        
         
         task = tasks[indexPath.row] as! Task
         

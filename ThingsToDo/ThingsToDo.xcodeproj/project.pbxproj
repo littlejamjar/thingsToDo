@@ -19,13 +19,15 @@
 		21C196BE1D387D3B0057AEAF /* FoldersTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C196BD1D387D3B0057AEAF /* FoldersTVC.swift */; };
 		21C196C91D389CA20057AEAF /* TransitioningObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C196C81D389CA20057AEAF /* TransitioningObject.swift */; };
 		21E9D47B1D4C256600ACCF43 /* TasksTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D47A1D4C256600ACCF43 /* TasksTVC.swift */; };
-		21E9D48A1D4C4FDE00ACCF43 /* Folder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D4841D4C4FDE00ACCF43 /* Folder+CoreDataProperties.swift */; };
-		21E9D48B1D4C4FDE00ACCF43 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D4851D4C4FDE00ACCF43 /* Folder.swift */; };
-		21E9D48C1D4C4FDE00ACCF43 /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D4861D4C4FDE00ACCF43 /* Task+CoreDataProperties.swift */; };
-		21E9D48D1D4C4FDE00ACCF43 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D4871D4C4FDE00ACCF43 /* Task.swift */; };
-		21E9D48E1D4C4FDE00ACCF43 /* SubFolder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D4881D4C4FDE00ACCF43 /* SubFolder+CoreDataProperties.swift */; };
-		21E9D48F1D4C4FDE00ACCF43 /* SubFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D4891D4C4FDE00ACCF43 /* SubFolder.swift */; };
 		21E9D4911D4C55CA00ACCF43 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E9D4901D4C55CA00ACCF43 /* TabBarViewController.swift */; };
+		21EB534D1D4DFD4B0081A30C /* Folder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB53451D4DFD4B0081A30C /* Folder+CoreDataProperties.swift */; };
+		21EB534E1D4DFD4B0081A30C /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB53461D4DFD4B0081A30C /* Folder.swift */; };
+		21EB534F1D4DFD4B0081A30C /* SubFolder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB53471D4DFD4B0081A30C /* SubFolder+CoreDataProperties.swift */; };
+		21EB53501D4DFD4B0081A30C /* SubFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB53481D4DFD4B0081A30C /* SubFolder.swift */; };
+		21EB53511D4DFD4B0081A30C /* SubTask+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB53491D4DFD4B0081A30C /* SubTask+CoreDataProperties.swift */; };
+		21EB53521D4DFD4B0081A30C /* SubTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB534A1D4DFD4B0081A30C /* SubTask.swift */; };
+		21EB53531D4DFD4B0081A30C /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB534B1D4DFD4B0081A30C /* Task+CoreDataProperties.swift */; };
+		21EB53541D4DFD4B0081A30C /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB534C1D4DFD4B0081A30C /* Task.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,13 +66,15 @@
 		21C196BD1D387D3B0057AEAF /* FoldersTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldersTVC.swift; sourceTree = "<group>"; };
 		21C196C81D389CA20057AEAF /* TransitioningObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitioningObject.swift; sourceTree = "<group>"; };
 		21E9D47A1D4C256600ACCF43 /* TasksTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksTVC.swift; sourceTree = "<group>"; };
-		21E9D4841D4C4FDE00ACCF43 /* Folder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Folder+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		21E9D4851D4C4FDE00ACCF43 /* Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
-		21E9D4861D4C4FDE00ACCF43 /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		21E9D4871D4C4FDE00ACCF43 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
-		21E9D4881D4C4FDE00ACCF43 /* SubFolder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SubFolder+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		21E9D4891D4C4FDE00ACCF43 /* SubFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubFolder.swift; sourceTree = "<group>"; };
 		21E9D4901D4C55CA00ACCF43 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		21EB53451D4DFD4B0081A30C /* Folder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Folder+CoreDataProperties.swift"; path = "../Folder+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		21EB53461D4DFD4B0081A30C /* Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Folder.swift; path = ../Folder.swift; sourceTree = "<group>"; };
+		21EB53471D4DFD4B0081A30C /* SubFolder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SubFolder+CoreDataProperties.swift"; path = "../SubFolder+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		21EB53481D4DFD4B0081A30C /* SubFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubFolder.swift; path = ../SubFolder.swift; sourceTree = "<group>"; };
+		21EB53491D4DFD4B0081A30C /* SubTask+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SubTask+CoreDataProperties.swift"; path = "../SubTask+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		21EB534A1D4DFD4B0081A30C /* SubTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubTask.swift; path = ../SubTask.swift; sourceTree = "<group>"; };
+		21EB534B1D4DFD4B0081A30C /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Task+CoreDataProperties.swift"; path = "../Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		21EB534C1D4DFD4B0081A30C /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../Task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,12 +167,14 @@
 		21C196C01D388BCF0057AEAF /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				21E9D4841D4C4FDE00ACCF43 /* Folder+CoreDataProperties.swift */,
-				21E9D4851D4C4FDE00ACCF43 /* Folder.swift */,
-				21E9D4861D4C4FDE00ACCF43 /* Task+CoreDataProperties.swift */,
-				21E9D4871D4C4FDE00ACCF43 /* Task.swift */,
-				21E9D4881D4C4FDE00ACCF43 /* SubFolder+CoreDataProperties.swift */,
-				21E9D4891D4C4FDE00ACCF43 /* SubFolder.swift */,
+				21EB53451D4DFD4B0081A30C /* Folder+CoreDataProperties.swift */,
+				21EB53461D4DFD4B0081A30C /* Folder.swift */,
+				21EB53471D4DFD4B0081A30C /* SubFolder+CoreDataProperties.swift */,
+				21EB53481D4DFD4B0081A30C /* SubFolder.swift */,
+				21EB53491D4DFD4B0081A30C /* SubTask+CoreDataProperties.swift */,
+				21EB534A1D4DFD4B0081A30C /* SubTask.swift */,
+				21EB534B1D4DFD4B0081A30C /* Task+CoreDataProperties.swift */,
+				21EB534C1D4DFD4B0081A30C /* Task.swift */,
 				21A2C21E1D38747600BA708F /* ThingsToDo.xcdatamodeld */,
 			);
 			name = Model;
@@ -317,19 +323,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21E9D48B1D4C4FDE00ACCF43 /* Folder.swift in Sources */,
+				21EB53501D4DFD4B0081A30C /* SubFolder.swift in Sources */,
+				21EB53511D4DFD4B0081A30C /* SubTask+CoreDataProperties.swift in Sources */,
+				21EB534F1D4DFD4B0081A30C /* SubFolder+CoreDataProperties.swift in Sources */,
+				21EB53521D4DFD4B0081A30C /* SubTask.swift in Sources */,
 				2182BD9D1D42D599003533C0 /* SubFoldersTVC.swift in Sources */,
+				21EB534E1D4DFD4B0081A30C /* Folder.swift in Sources */,
 				21C196C91D389CA20057AEAF /* TransitioningObject.swift in Sources */,
-				21E9D48D1D4C4FDE00ACCF43 /* Task.swift in Sources */,
 				21E9D4911D4C55CA00ACCF43 /* TabBarViewController.swift in Sources */,
-				21E9D48C1D4C4FDE00ACCF43 /* Task+CoreDataProperties.swift in Sources */,
-				21E9D48E1D4C4FDE00ACCF43 /* SubFolder+CoreDataProperties.swift in Sources */,
+				21EB53541D4DFD4B0081A30C /* Task.swift in Sources */,
 				21A2C21A1D38747500BA708F /* LoginVC.swift in Sources */,
-				21E9D48A1D4C4FDE00ACCF43 /* Folder+CoreDataProperties.swift in Sources */,
+				21EB534D1D4DFD4B0081A30C /* Folder+CoreDataProperties.swift in Sources */,
 				21A2C2181D38747500BA708F /* AppDelegate.swift in Sources */,
-				21E9D48F1D4C4FDE00ACCF43 /* SubFolder.swift in Sources */,
 				21E9D47B1D4C256600ACCF43 /* TasksTVC.swift in Sources */,
 				21A2C2201D38747600BA708F /* ThingsToDo.xcdatamodeld in Sources */,
+				21EB53531D4DFD4B0081A30C /* Task+CoreDataProperties.swift in Sources */,
 				21C196BE1D387D3B0057AEAF /* FoldersTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

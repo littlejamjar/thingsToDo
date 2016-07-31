@@ -84,6 +84,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <scrollView key="tableFooterView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" id="Yj1-Qd-qMZ">
+                            <rect key="frame" x="0.0" y="136" width="600" height="100"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" borderStyle="line" placeholder="Type notes here.." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4r2-gc-ehq">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="4r2-gc-ehq" firstAttribute="centerY" secondItem="Yj1-Qd-qMZ" secondAttribute="centerY" id="Cnm-QI-sRZ"/>
+                                <constraint firstItem="4r2-gc-ehq" firstAttribute="centerX" secondItem="Yj1-Qd-qMZ" secondAttribute="centerX" id="K05-ke-V5Q"/>
+                                <constraint firstItem="4r2-gc-ehq" firstAttribute="width" secondItem="Yj1-Qd-qMZ" secondAttribute="width" id="KH6-lP-RcY"/>
+                                <constraint firstItem="4r2-gc-ehq" firstAttribute="height" secondItem="Yj1-Qd-qMZ" secondAttribute="height" id="dvh-4o-Czd"/>
+                            </constraints>
+                        </scrollView>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="vfR-bM-vx4">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>

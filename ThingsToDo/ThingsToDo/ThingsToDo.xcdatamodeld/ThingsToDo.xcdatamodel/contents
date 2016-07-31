@@ -11,9 +11,18 @@
         <attribute name="dueDateTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="isComplete" attributeType="Boolean" syncable="YES"/>
         <attribute name="isHot" attributeType="Boolean" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="subFolders" inverseEntity="Folder" syncable="YES"/>
         <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Task" inverseName="subFolder" inverseEntity="Task" syncable="YES"/>
+    </entity>
+    <entity name="SubTask" representedClassName=".SubTask" syncable="YES">
+        <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dueDateTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="isComplete" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isHot" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="task" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Task" inverseName="subTasks" inverseEntity="Task" syncable="YES"/>
     </entity>
     <entity name="Task" representedClassName=".Task" syncable="YES">
         <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -22,10 +31,12 @@
         <attribute name="isHot" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="subFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SubFolder" inverseName="tasks" inverseEntity="SubFolder" syncable="YES"/>
+        <relationship name="subTasks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SubTask" inverseName="task" inverseEntity="SubTask" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Folder" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="SubFolder" positionX="133" positionY="-18" width="128" height="148"/>
-        <element name="Task" positionX="421" positionY="74" width="128" height="133"/>
+        <element name="Folder" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="SubFolder" positionX="133" positionY="-18" width="128" height="163"/>
+        <element name="Task" positionX="421" positionY="74" width="128" height="148"/>
+        <element name="SubTask" positionX="709" positionY="162" width="128" height="133"/>
     </elements>
 </model>

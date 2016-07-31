@@ -1,5 +1,5 @@
 //
-//  SubFolder.swift
+//  SubTask.swift
 //  ThingsToDo
 //
 //  Created by james wikaira on 31/07/16.
@@ -10,8 +10,8 @@ import Foundation
 import CoreData
 
 
-class SubFolder: NSManagedObject {
-    
-    // Insert code here to add functionality to your managed object subclass
-    
+class SubTask: NSManagedObject {
+
+// Insert code here to add functionality to your managed object subclass
+
 }

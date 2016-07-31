@@ -187,6 +187,7 @@ class SubFoldersTVC: UITableViewController {
         newSubFolder.isHot = false
         newSubFolder.dueDateTime = nil
         newSubFolder.folder = folder
+        newSubFolder.text = nil
         
         
 //        newSubFolder.setValue(title, forKey: "title")

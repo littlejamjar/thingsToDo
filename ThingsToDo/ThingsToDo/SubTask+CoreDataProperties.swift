@@ -1,5 +1,5 @@
 //
-//  Folder+CoreDataProperties.swift
+//  SubTask+CoreDataProperties.swift
 //  ThingsToDo
 //
 //  Created by james wikaira on 31/07/16.
@@ -12,11 +12,13 @@
 import Foundation
 import CoreData
 
-extension Folder {
+extension SubTask {
 
     @NSManaged var creationDate: NSDate?
+    @NSManaged var dueDateTime: NSDate?
     @NSManaged var isComplete: NSNumber?
-    @NSManaged var title: String?
-    @NSManaged var subFolders: NSSet?
+    @NSManaged var isHot: NSNumber?
+    @NSManaged var text: String?
+    @NSManaged var task: Task?
 
 }
