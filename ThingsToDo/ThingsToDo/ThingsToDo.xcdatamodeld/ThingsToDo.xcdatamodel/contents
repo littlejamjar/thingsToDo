@@ -36,7 +36,7 @@
     <elements>
         <element name="Folder" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="SubFolder" positionX="133" positionY="-18" width="128" height="163"/>
-        <element name="Task" positionX="421" positionY="74" width="128" height="148"/>
         <element name="SubTask" positionX="709" positionY="162" width="128" height="133"/>
+        <element name="Task" positionX="421" positionY="74" width="128" height="148"/>
     </elements>
 </model>

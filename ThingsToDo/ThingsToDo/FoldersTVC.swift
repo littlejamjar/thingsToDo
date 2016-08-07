@@ -75,7 +75,7 @@ class FoldersTVC: UITableViewController {
         // Create the Add button
         let addAction = UIAlertAction(title: "Add", style: UIAlertActionStyle.Default) { (alert) in
             //TODO: User cancelled
-            print("Should have made the new folder")
+            //print("Should have made the new folder")
             
             guard let title = alertController.textFields![0].text else {
                 print("No title")
@@ -104,12 +104,12 @@ class FoldersTVC: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print("segue = \(segue.identifier)")
+        //print("segue = \(segue.identifier)")
         
         if segue.identifier == "segueToSubFolder" {
             let destinationVC = segue.destinationViewController as! SubFoldersTVC
             //destinationVC.folder = tableView.indexPathForSelectedRow
-            print("prepare indexPathForSelectedRow = \(tableView.indexPathForSelectedRow?.row)")
+            //print("prepare indexPathForSelectedRow = \(tableView.indexPathForSelectedRow?.row)")
             //destinationVC.folder = folders[(tableView.indexPathForSelectedRow?.row)!] as! Folder
             
             destinationVC.folder = folders[(tableView.indexPathForSelectedRow?.row)!] as? Folder
@@ -122,7 +122,7 @@ class FoldersTVC: UITableViewController {
     }
     
     func createFolder(title: String){    
-        print("createFolder = \(title)")
+        //print("createFolder = \(title)")
         
         guard let entity = NSEntityDescription.entityForName("Folder", inManagedObjectContext: moc) else {
             print("Error: Could not create entity")

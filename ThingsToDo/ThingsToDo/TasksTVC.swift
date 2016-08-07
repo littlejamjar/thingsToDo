@@ -14,27 +14,67 @@ class TasksTVC: UITableViewController {
     // Property declarations
     var actionToEnable: UIAlertAction?
     var moc: NSManagedObjectContext!
-    var tasks = [NSManagedObject]()
+    var objArray = [NSManagedObject]()
     var task: Task?
     var subFolder: SubFolder?
     
-    
-    var taskParent: Task?
+    var selectedObj: NSObject?
     
     //let searchController = UISearchController(searchResultsController: nil) //FIXME: argument of nil means use current view i think???
     
     var filteredSubFolders = [SubFolder]()
     
+    var num = 0
     
     
-    func createSubTask(){
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        taskParent = tasks[0] as? Task
+        // Set the Managed Object Context
+        moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
-        let text = "test subtask"
+        let fetchRequest = NSFetchRequest(entityName: "Task")
+        //fetchRequest.predicate = NSPredicate(format: "title = %@", argumentArray: ["jim"])
         
-        print("insde createSubTask")
-        print("taskParent's subtasks = \(taskParent?.subTasks?.count)")
+        //FIXME: what is this doing?
+        if subFolder?.title != nil {
+            //print("it's not nil!!!")
+            self.navigationItem.title = subFolder!.title
+            
+        } else {
+            //print("subfolder is NIL!!")
+        }
+        
+        let pred = NSPredicate(format: "subFolder == %@", subFolder!)
+        
+        fetchRequest.predicate = pred
+        
+        
+        do {
+            let results = try moc.executeFetchRequest(fetchRequest)
+            objArray = results as! [NSManagedObject]
+            //print("subFolders.count = \(objArray.count)")
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        } catch {
+            print("some other error")
+        }
+    
+        
+        let addFolderButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(TasksTVC.addTask))
+        //let searchButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: #selector(SubFoldersTVC.search))
+        let addDueDateTimeButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Organize, target: self, action: #selector(TasksTVC.createSubTask)) //TODO: Get a better menu picture
+        
+        let rightBarButtonItemArray = [ addFolderButtonItem, addDueDateTimeButtonItem ]
+        
+        self.navigationItem.rightBarButtonItems = rightBarButtonItemArray
+    }
+    
+    func createSubTask(taskParent: Task){
+        
+        print("Creating sub task")
+        
+        let text = "Sub Task :: \(taskParent.text)"
         
         
         guard let entity = NSEntityDescription.entityForName("SubTask", inManagedObjectContext: moc) else {
@@ -55,115 +95,17 @@ class TasksTVC: UITableViewController {
         
         do{
             try moc.save()
-            tasks.append(newSubTask)    //FIXME: What about this???
+            //objArray.append(newSubTask)    //FIXME: What about this???
         } catch {
             print("Error: Could not save new folder from Managed Object Context")
         }
         
-        
-        
-//        dispatch_async(dispatch_get_main_queue()) {
-//            //self.tableView.reloadData()
-//            
-//            self.tableView.beginUpdates()
-//            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-//            self.tableView.endUpdates()
-//            
-//        }
-        
-        
-        
     }
 
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        // Set the Managed Object Context
-        moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        
-        
-        
-        let fetchRequest = NSFetchRequest(entityName: "Task")
-        //fetchRequest.predicate = NSPredicate(format: "title = %@", argumentArray: ["jim"])
-        
-        //FIXME: what is this doing?
-        if subFolder?.title != nil {
-            print("it's not nil!!!")
-            self.navigationItem.title = subFolder!.title
-            
-        } else {
-            print("subfolder is NIL!!")
-        }
-        
-        let pred = NSPredicate(format: "subFolder == %@", subFolder!)
-        
-        
-        
-        fetchRequest.predicate = pred
-        
-        
-        
-        //3
-        do {
-            let results = try moc.executeFetchRequest(fetchRequest)
-            tasks = results as! [NSManagedObject]
-            print("subFolders.count = \(tasks.count)")
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-        } catch {
-            print("some other error")
-        }
-        
-        
-        //TODO: Reference code. Delete once done.
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        
-        // -- Setup navigation bar appearance
-        //self.navigationItem.title = "Things To Do"  //TODO: Should this say something like "Folders?" or should that be an informal name?
-        
-        
-        let addFolderButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(TasksTVC.addTask))
-        //let searchButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Search, target: self, action: #selector(SubFoldersTVC.search))
-        let addDueDateTimeButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Organize, target: self, action: #selector(TasksTVC.createSubTask)) //TODO: Get a better menu picture
-        
-        let rightBarButtonItemArray = [ addFolderButtonItem, addDueDateTimeButtonItem ]
-        
-        self.navigationItem.rightBarButtonItems = rightBarButtonItemArray
-        //self.navigationItem.leftBarButtonItem = addDueDateTimeButtonItem
-        
-        //searchController.searchResultsUpdater = self
-        //searchController.dimsBackgroundDuringPresentation = false
-        //definesPresentationContext = true
-        //tableView.tableHeaderView = searchController.searchBar
-        
-        
-        
-        
-        
-        // Testing SubTasks
-        //createSubTask(<#T##text: String##String#>, indexPath: <#T##NSIndexPath#>)
-        
-        
-        
-    }
-    
+
     func addDueDateTime(){
-        
+        print("TODO:IMPLEMENT CODE")
     }
     
     func addTask() {
@@ -171,20 +113,9 @@ class TasksTVC: UITableViewController {
         // Creat Alert Controller
         let alertController = UIAlertController(title: "Add Task", message: "Enter Task title", preferredStyle: UIAlertControllerStyle.Alert)
         
-        // Add TextField to the Alert Controller
-        
-        //print("folder.title = \(subFolder?.folder)")
-        
-        
-        
         alertController.addTextFieldWithConfigurationHandler { (textField) in
             textField.addTarget(self, action: #selector(self.textFieldChanged(_:)), forControlEvents: .EditingChanged)
         }
-        
-//        
-//        func textFieldChanged(){
-//            
-//        }
         
         // Create the Cancel button
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) in
@@ -195,7 +126,7 @@ class TasksTVC: UITableViewController {
         // Create the Add button
         let addAction = UIAlertAction(title: "Add", style: UIAlertActionStyle.Default) { (alert) in
             //TODO: User cancelled
-            print("Should have made the new Task")
+            //print("Should have made the new Task")
             
             guard let title = alertController.textFields![0].text else {
                 print("No title")
@@ -223,8 +154,6 @@ class TasksTVC: UITableViewController {
         
     }
     
-
-    
     func createTask(text: String){
         
         guard let entity = NSEntityDescription.entityForName("Task", inManagedObjectContext: moc) else {
@@ -241,11 +170,11 @@ class TasksTVC: UITableViewController {
         newTask.isHot = false
         newTask.dueDateTime = nil
         newTask.subFolder = subFolder
-        
+        newTask.subTasks = nil
         
         do{
             try moc.save()
-            tasks.append(newTask)
+            objArray.append(newTask)
         } catch {
             print("Error: Could not save new folder from Managed Object Context")
         }
@@ -256,8 +185,6 @@ class TasksTVC: UITableViewController {
         
         
     }
-    
-    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -292,84 +219,271 @@ extension TasksTVC {
         
         
         
-        print("subFolders.count = \(tasks.count)")
+        //print("subFolders.count = \(tasks.count)")
         
         
-        return tasks.count
+        return objArray.count
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //TODO: Implement code for when users select a row
-        
-        
-        //should start here. Get the indexPath, append and reload..simple... :(
-        
-        print("indexPath.row = \(indexPath.row)")
-        
-        //let sT = SubTask.
-        
-        taskParent = self.tasks[indexPath.row] as? Task
-        
-        
-        print("taskParent.text = \(taskParent!.text)")
-        
-        //createSubTask("not used", indexPath: indexPath)
-//        
-//        
-//        
-//        
 
-//        
-//        
-//        // the data of the childs for the specific parent cell.
-//        let currentSubItems = self.dataSource[parent].childs
-//        
-//        // update the state of the cell.
-//        self.dataSource[parent].state = .Expanded
-//        
-//        // position to start to insert rows.
-//        var insertPos = index + 1
-//        
-//        let indexPaths = (0..<currentSubItems.count).map { _ -> NSIndexPath in
-//            let indexPath = NSIndexPath(forRow: insertPos, inSection: 0)
-//            insertPos += 1
-//            return indexPath
-//        }
-//        
-//        // insert the new rows
-//        self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Fade)
-//        
-//        // update the total of rows
-//        self.total += currentSubItems.count
+        // Clear tasks
+        var selectedTask: Task? = nil
+        var selectedSubTask: SubTask? = nil
         
+        /* 
+            pseudo code
+         
+            1. is of class task?
+                T. has sub tasks?
+                    T. already expanded/showing?
+                        T. collapseCells()
+                        F. expandCells()
+                    F. do nothing - nothing to show
+                F. is of class sub task?
+                    T. do nothing - no plans for sub sub tasks at this stage
+                    F. catch error
+         
+            How determine if already expanded? Search dataArray for their presence? and search the index for their presence?
+         
+         
+         
+         */
+        
+        if objArray[indexPath.row].isKindOfClass(Task){
+            selectedTask = objArray[indexPath.row] as? Task
+            
+            if selectedTask?.subTasks?.count > 0 {
+                
+                var cellIsExpanded = false
+                
+
+                // Check objArray to see if all the subtasks are there.
+                for item in (selectedTask?.subTasks)! {
+                    if !objArray.contains(item as! NSManagedObject) {
+                        print("The subtask isn't there")
+                    } else {
+                        cellIsExpanded = true
+                        print("found it!")
+                        break
+                    }
+                }
+                
+                if !cellIsExpanded {
+                    expandCellsFromIndexOf(selectedTask!, indexPath: indexPath, tableView: tableView)
+                } else {
+                    collapseCellsFromIndexOf(selectedTask!, indexPath: indexPath, tableView: tableView)
+                    
+                    
+                    print("Nothing to expand bro")
+                }
+
+                
+                
+                //objArray.contains(<#T##element: NSManagedObject##NSManagedObject#>)
+                
+                
+                
+            }
+            
+//            
+//            
+//            // Get array of SubTasks OR do I even need one?
+//            guard let objToInsert = selectedTask?.subTasks else {
+//                print("Task has no subtasks")
+//                return
+//            }
+//            
+//            var i = 0
+//            
+//            // Update the datasource
+//            for item in objToInsert {
+//                objArray.insert(item as! NSManagedObject, atIndex: indexPath.row+1+i)
+//                i += 1
+//            }
+//            
+//            let expandedRange = NSMakeRange(indexPath.row, i)
+//            
+//            //print("expandedRange.location = \(expandedRange.location)")
+//            
+//            var indexPaths = [NSIndexPath]()
+//            
+//
+//            
+//            for i in 0..<objToInsert.count {
+//                //print("i.title = \()")
+//                indexPaths.append(NSIndexPath.init(forRow: indexPath.row+i+1, inSection: 0))
+//
+//
+//            }
+//            
+//            
+//            
+//            // Insert the rows
+//            self.tableView.beginUpdates()
+//
+//            tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
+//            self.tableView.endUpdates()
+            
+            
+        } else if objArray[indexPath.row].isKindOfClass(SubTask){
+            selectedSubTask = objArray[indexPath.row] as? SubTask
+        }
+    
+        
+
         
     }
+    
+    //FIXME: May need to change this from a Task to an NSManagedObject at some point
+    func collapseCellsFromIndexOf(selectedTask: Task,indexPath:NSIndexPath,tableView:UITableView){
+        
+        let end = indexPath.row + 1 + (selectedTask.subTasks?.count)!
+        let start = indexPath.row + 1
+        let collapseRange =  Range(start: start, end: end)
+        
+        
+        // Get array of SubTasks OR do I even need one?
+        guard let objToRemove = selectedTask.subTasks else {
+            print("Task has no subtasks")
+            return
+        }
+        
+        // Update the datasource
+        objArray.removeRange(collapseRange)
+        
+        var indexPaths = [NSIndexPath]()
+        
+        //let i = 0
+        for i in 0..<objToRemove.count {
+            //print("i.title = \()")
+            indexPaths.append(NSIndexPath.init(forRow: indexPath.row+i+1, inSection: 0))
+            
+            
+        }
+        dispatch_async(dispatch_get_main_queue()) {
+            // Insert the rows
+            self.tableView.beginUpdates()
+            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
+            self.tableView.endUpdates()
+        }
+        
 
+        
+    }
+    
+    func expandNewCellsFromIndexOf(selectedTask: Task,indexPath:NSIndexPath,tableView:UITableView){
+        
+    
+    }
+    
+    
+    //FIXME: May need to change this from a Task to an NSManagedObject at some point
+    func expandCellsFromIndexOf(selectedTask: Task,indexPath:NSIndexPath,tableView:UITableView){
+        
+        
+        // Get array of SubTasks OR do I even need one?
+//        guard let objToInsert = selectedTask.subTasks else {
+//            print("Task has no subtasks")
+//            return
+//        }
+        
 
+        
+        // Update the datasource
+        
+        //print("objToInsert.count = \(objToInsert.count)")
+        
+        
+        /*
+            Are any subtasks in objArray?
+                T.  Insert ONLY new ones and append them to the end of current subtasks
+                F.  Insert ALL subtasks
+         
+         
+         
+         
+         */
+        
+        var i = 0
+        
+        var numObjToInsert = 0
+        
+        for item in selectedTask.subTasks! {
+            
+            
+            for _ in objArray {
+                if !objArray.contains(item as! NSManagedObject) {
+                    objArray.insert(item as! NSManagedObject, atIndex: indexPath.row+1+i)
+                    i += 1
+                    
+                    numObjToInsert += 1
+                    
+                    print("i = \(i)")
+                } else {
+
+                }
+                
+
+            }
+            
+            
+
+        }
+        
+        //let expandedRange = NSMakeRange(indexPath.row, i)
+        
+        //print("expandedRange.location = \(expandedRange.location)")
+        
+        var indexPaths = [NSIndexPath]()
+        
+        print("numObjToInsert.count = \(numObjToInsert)")
+        
+        for i in 0..<numObjToInsert {
+            //print("i.title = \()")
+            indexPaths.append(NSIndexPath.init(forRow: indexPath.row+i+1, inSection: 0))
+            
+            
+        }
+        
+        
+        // Insert the rows
+        dispatch_async(dispatch_get_main_queue()) {
+
+            self.tableView.beginUpdates()
+            
+            tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
+            self.tableView.endUpdates()
+        }
+    }
+    
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         
-        var task: Task
+        var task: NSManagedObject?
         
-        print("indexPath.row = \(indexPath.row)")
-        
-        
-        task = tasks[indexPath.row] as! Task
+        //print("indexPath.row = \(indexPath.row)")
         
         
+        //print("objArray.count = \(objArray.count)")
         
-        //cell.textLabel?.text = folder.title
-        cell.textLabel?.text = task.valueForKey("text") as? String
-        
-        
-        
-        cell.backgroundColor = UIColor.blueColor()
-        
-//        if (cell.textLabel?.text = "test cell") != nil{
-//            print("textLabel is not nil")
-//        }
+        if objArray[indexPath.row].isKindOfClass(Task) {
+            //print("the row is of Task class")
+            task = objArray[indexPath.row] as! Task
+            cell.backgroundColor = UIColor.blueColor()
+            //cell.textLabel?.text = folder.title
+            cell.textLabel?.text = task!.valueForKey("text") as? String
+
+
+        } else if objArray[indexPath.row].isKindOfClass(SubTask) {
+            //print("the row is of SubTask class")
+            task = objArray[indexPath.row] as! SubTask
+            cell.backgroundColor = UIColor.redColor()
+            //cell.textLabel?.text = folder.title
+            cell.textLabel?.text = task!.valueForKey("text") as? String
+        }
         
         return cell
         
@@ -379,15 +493,15 @@ extension TasksTVC {
     
     func deleteTask(indexPath: NSIndexPath) {
         
-        let taskToDelete = self.tasks[indexPath.row]
+        let taskToDelete = self.objArray[indexPath.row]
         
         self.moc.deleteObject(taskToDelete)
         print("object should have deleted")
         
         do {
             try self.moc.save()
-            let index = tasks.indexOf(taskToDelete)
-            tasks.removeAtIndex(index!)
+            let index = objArray.indexOf(taskToDelete)
+            objArray.removeAtIndex(index!)
             
         } catch {
             print("Error: Failed to save context after deletng Folder")
@@ -456,9 +570,12 @@ extension TasksTVC {
         
         delete.backgroundColor = UIColor.redColor()
         
-        let edit = UITableViewRowAction(style: .Normal, title: "edit") { (action, index) in
+        let edit = UITableViewRowAction(style: .Normal, title: "Add") { (action, index) in
             //TODO: Code for edit button
-            print("User pressed the edit button")
+            let pT = self.objArray[indexPath.row] as! Task
+            self.createSubTask(pT)
+            
+            self.expandCellsFromIndexOf(self.objArray[indexPath.row] as! Task, indexPath: indexPath, tableView: tableView)
             
         }
         
@@ -499,3 +616,31 @@ extension TasksTVC  {
         //return (self.actionToEnable?.enabled)!
     }
 }
+
+
+
+
+
+
+/*
+ 
+ CODE FOR LATER
+ 
+ // Create index paths for the range
+ //FIXEME: WHY DOESN'T MINE WORK?!?
+ //            for i in 0..<expandedRange.length {
+ //                print("expandedRange.location = \(expandedRange.location)")
+ //                //print("expandedRange.length = \(expandedRange.length)")
+ //                print("i = \(i)")
+ //                print("expandedRange.location + i = \(expandedRange.location + i+1)")
+ //
+ //                print("indexPath.row+i+1 = \(indexPath.row+i+1)\n")
+ //
+ //                indexPaths.append(NSIndexPath.init(forRow: expandedRange.location+i+1, inSection: 0))
+ //
+ //                //indexPaths.append(NSIndexPath(forRow: indexPath.row, inSection: <#T##Int#>)
+ //
+ //            }
+ 
+ */
+

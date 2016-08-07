@@ -40,11 +40,11 @@ class SubFoldersTVC: UITableViewController {
         
         //FIXME: what is this doing?
         if folder?.title != nil {
-            print("it's not nil!!!")
+            //print("it's not nil!!!")
             self.navigationItem.title = folder!.title
             
         } else {
-            print("folder is NIL!!1")
+            //print("folder is NIL!!1")
         }
         
         let pred = NSPredicate(format: "folder == %@", folder!)
@@ -59,7 +59,7 @@ class SubFoldersTVC: UITableViewController {
         do {
             let results = try moc.executeFetchRequest(fetchRequest)
             subFolders = results as! [NSManagedObject]
-            print("subFolders.count = \(subFolders.count)")
+            //print("subFolders.count = \(subFolders.count)")
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         } catch {
@@ -102,7 +102,7 @@ class SubFoldersTVC: UITableViewController {
         
         // Add TextField to the Alert Controller
     
-        print("folder.title = \(subFolder?.folder)")
+        //print("folder.title = \(subFolder?.folder)")
         
         
         
@@ -124,7 +124,7 @@ class SubFoldersTVC: UITableViewController {
         // Create the Add button
         let addAction = UIAlertAction(title: "Add", style: UIAlertActionStyle.Default) { (alert) in
             //TODO: User cancelled
-            print("Should have made the new sub folder")
+            //print("Should have made the new sub folder")
             
             guard let title = alertController.textFields![0].text else {
                 print("No title")
@@ -153,12 +153,12 @@ class SubFoldersTVC: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print("segue = \(segue.identifier)")
+        //print("segue = \(segue.identifier)")
         
         if segue.identifier == "segueToTasks" {
             let destinationVC = segue.destinationViewController as! TasksTVC
             //destinationVC.folder = tableView.indexPathForSelectedRow
-            print("prepare indexPathForSelectedRow = \(tableView.indexPathForSelectedRow?.row)")
+            //print("prepare indexPathForSelectedRow = \(tableView.indexPathForSelectedRow?.row)")
             //destinationVC.folder = folders[(tableView.indexPathForSelectedRow?.row)!] as! Folder
             
             destinationVC.subFolder = subFolders[(tableView.indexPathForSelectedRow?.row)!] as? SubFolder
@@ -171,7 +171,7 @@ class SubFoldersTVC: UITableViewController {
     }
     
     func createSubFolder(title: String){
-        print("createFolder = \(title)")
+        //print("createFolder = \(title)")
         
         guard let entity = NSEntityDescription.entityForName("SubFolder", inManagedObjectContext: moc) else {
             print("Error: Could not create entity")
@@ -377,7 +377,7 @@ extension SubFoldersTVC {
     }
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
-        print("before filteredFolders = \(filteredSubFolders.count)")
+        //print("before filteredFolders = \(filteredSubFolders.count)")
         
         
         filteredSubFolders = (subFolders as! [SubFolder]).filter { obj in
@@ -388,7 +388,7 @@ extension SubFoldersTVC {
             return contains!
         }
         
-        print("after filteredFolders = \(filteredSubFolders.count)")
+        //print("after filteredFolders = \(filteredSubFolders.count)")
         
         tableView.reloadData()
     }
