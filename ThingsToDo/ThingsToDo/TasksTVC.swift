@@ -231,109 +231,41 @@ extension TasksTVC {
         var selectedTask: Task? = nil
         var selectedSubTask: SubTask? = nil
         
-        /* 
-            pseudo code
-         
-            1. is of class task?
-                T. has sub tasks?
-                    T. already expanded/showing?
-                        T. collapseCells()
-                        F. expandCells()
-                    F. do nothing - nothing to show
-                F. is of class sub task?
-                    T. do nothing - no plans for sub sub tasks at this stage
-                    F. catch error
-         
-            How determine if already expanded? Search dataArray for their presence? and search the index for their presence?
-         
-         
-         
-         */
-        
         if objArray[indexPath.row].isKindOfClass(Task){
             selectedTask = objArray[indexPath.row] as? Task
-            
             if selectedTask?.subTasks?.count > 0 {
-                
-                var cellIsExpanded = false
-                
-
-                // Check objArray to see if all the subtasks are there.
-                for item in (selectedTask?.subTasks)! {
-                    if !objArray.contains(item as! NSManagedObject) {
-                        print("The subtask isn't there")
-                    } else {
-                        cellIsExpanded = true
-                        print("found it!")
-                        break
-                    }
-                }
-                
-                if !cellIsExpanded {
+        
+                if !isExpanded(selectedTask!) {
                     expandCellsFromIndexOf(selectedTask!, indexPath: indexPath, tableView: tableView)
                 } else {
                     collapseCellsFromIndexOf(selectedTask!, indexPath: indexPath, tableView: tableView)
-                    
-                    
-                    print("Nothing to expand bro")
                 }
-
-                
-                
-                //objArray.contains(<#T##element: NSManagedObject##NSManagedObject#>)
-                
-                
-                
             }
-            
-//            
-//            
-//            // Get array of SubTasks OR do I even need one?
-//            guard let objToInsert = selectedTask?.subTasks else {
-//                print("Task has no subtasks")
-//                return
-//            }
-//            
-//            var i = 0
-//            
-//            // Update the datasource
-//            for item in objToInsert {
-//                objArray.insert(item as! NSManagedObject, atIndex: indexPath.row+1+i)
-//                i += 1
-//            }
-//            
-//            let expandedRange = NSMakeRange(indexPath.row, i)
-//            
-//            //print("expandedRange.location = \(expandedRange.location)")
-//            
-//            var indexPaths = [NSIndexPath]()
-//            
-//
-//            
-//            for i in 0..<objToInsert.count {
-//                //print("i.title = \()")
-//                indexPaths.append(NSIndexPath.init(forRow: indexPath.row+i+1, inSection: 0))
-//
-//
-//            }
-//            
-//            
-//            
-//            // Insert the rows
-//            self.tableView.beginUpdates()
-//
-//            tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
-//            self.tableView.endUpdates()
             
             
         } else if objArray[indexPath.row].isKindOfClass(SubTask){
-            selectedSubTask = objArray[indexPath.row] as? SubTask
+            // Do nothing
+            
+            //selectedSubTask = objArray[indexPath.row] as? SubTask
         }
-    
-        
-
-        
     }
+    
+    func isExpanded(task: Task) -> Bool {
+        
+        if task.subTasks?.count == 0 {
+            return false
+        }
+        
+        for _ in objArray {
+            for sub in task.subTasks! {
+                if objArray.contains(sub as! NSManagedObject) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
     
     //FIXME: May need to change this from a Task to an NSManagedObject at some point
     func collapseCellsFromIndexOf(selectedTask: Task,indexPath:NSIndexPath,tableView:UITableView){
@@ -382,29 +314,6 @@ extension TasksTVC {
     func expandCellsFromIndexOf(selectedTask: Task,indexPath:NSIndexPath,tableView:UITableView){
         
         
-        // Get array of SubTasks OR do I even need one?
-//        guard let objToInsert = selectedTask.subTasks else {
-//            print("Task has no subtasks")
-//            return
-//        }
-        
-
-        
-        // Update the datasource
-        
-        //print("objToInsert.count = \(objToInsert.count)")
-        
-        
-        /*
-            Are any subtasks in objArray?
-                T.  Insert ONLY new ones and append them to the end of current subtasks
-                F.  Insert ALL subtasks
-         
-         
-         
-         
-         */
-        
         var i = 0
         
         var numObjToInsert = 0
@@ -431,19 +340,10 @@ extension TasksTVC {
 
         }
         
-        //let expandedRange = NSMakeRange(indexPath.row, i)
-        
-        //print("expandedRange.location = \(expandedRange.location)")
-        
         var indexPaths = [NSIndexPath]()
         
-        print("numObjToInsert.count = \(numObjToInsert)")
-        
         for i in 0..<numObjToInsert {
-            //print("i.title = \()")
             indexPaths.append(NSIndexPath.init(forRow: indexPath.row+i+1, inSection: 0))
-            
-            
         }
         
         
@@ -462,27 +362,21 @@ extension TasksTVC {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         
-        var task: NSManagedObject?
+        var selectedTask: Task? = nil
+        var selectedSubTask: SubTask? = nil
         
-        //print("indexPath.row = \(indexPath.row)")
-        
-        
-        //print("objArray.count = \(objArray.count)")
         
         if objArray[indexPath.row].isKindOfClass(Task) {
-            //print("the row is of Task class")
-            task = objArray[indexPath.row] as! Task
+            selectedTask = objArray[indexPath.row] as? Task
             cell.backgroundColor = UIColor.blueColor()
-            //cell.textLabel?.text = folder.title
-            cell.textLabel?.text = task!.valueForKey("text") as? String
-
+            cell.textLabel?.text = selectedTask?.text
+            
+    
 
         } else if objArray[indexPath.row].isKindOfClass(SubTask) {
-            //print("the row is of SubTask class")
-            task = objArray[indexPath.row] as! SubTask
+            selectedSubTask = objArray[indexPath.row] as? SubTask
             cell.backgroundColor = UIColor.redColor()
-            //cell.textLabel?.text = folder.title
-            cell.textLabel?.text = task!.valueForKey("text") as? String
+            cell.textLabel?.text = selectedSubTask?.text
         }
         
         return cell
@@ -491,26 +385,64 @@ extension TasksTVC {
     }
     
     
-    func deleteTask(indexPath: NSIndexPath) {
+    func deleteObj(indexPath: NSIndexPath) {   //FIXME: Update the name to deleteObj
+
+        let obj = self.objArray[indexPath.row]
         
-        let taskToDelete = self.objArray[indexPath.row]
+        /*
+            Pseudo Code
+         
+            1. Is the obj a Task?
+                F. Do nothing
+                T. Does is have any subtasks?
+                    F. Do nothing (it can't be expanded)
+                    T. Is it expanded?
+                        T. Call collapseCellsFromIndexOf()
+                        F. Check because this option shouldn't be possible
+         
+         */
         
-        self.moc.deleteObject(taskToDelete)
-        print("object should have deleted")
+        
+        
+        
+        
+        
+        if  obj.isKindOfClass(Task) &&
+            (obj as! Task).subTasks?.count > 0 &&
+            isExpanded(obj as! Task){
+            self.collapseCellsFromIndexOf(obj as! Task, indexPath: indexPath, tableView: self.tableView)
+        }
+        
+        var indexPaths = [NSIndexPath]()
+        indexPaths.append(NSIndexPath(forRow: indexPath.row, inSection: 0))
+        
+        self.moc.deleteObject(obj)
         
         do {
             try self.moc.save()
-            let index = objArray.indexOf(taskToDelete)
-            objArray.removeAtIndex(index!)
-            
+
+
+
+        
         } catch {
             print("Error: Failed to save context after deletng Folder")
         }
-        
+    
         dispatch_async(dispatch_get_main_queue()) {
-            self.tableView.reloadData()
+        }
+    
+
+        
+        
+        // Insert the rows
+        dispatch_async(dispatch_get_main_queue()) {
             
-            print("shit should have reloaded itself....")
+            // Need to remove the obj here because the previous collapseCellsFromIndexOf() call might not yet have completed on the main queue
+            self.objArray.removeAtIndex(self.objArray.indexOf(obj)!)
+            
+            self.tableView.beginUpdates()
+            self.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
+            self.tableView.endUpdates()
         }
     }
     
@@ -549,10 +481,7 @@ extension TasksTVC {
             
             let deleteButton = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (deleteButton) in
                 
-                self.deleteTask(indexPath)
-                
-                
-                
+                self.deleteObj(indexPath)
             })
             
             
